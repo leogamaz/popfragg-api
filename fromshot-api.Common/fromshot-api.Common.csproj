@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>fromshot_api.Common</RootNamespace>
+    <AssemblyName>fromshot-api.Common</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\fromshot-api.Domain\fromshot-api.Domain.csproj" />
+    <ProjectReference Include="..\fromshot-api.Repositories\fromshot-api.Repositories.csproj" />
+  </ItemGroup>
+</Project>

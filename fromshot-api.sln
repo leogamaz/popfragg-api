@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fromshot-api", "fromshot-api\fromshot-api.csproj", "{98105F07-8091-432F-ACBF-07318C4E3E47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fromshot-api.Domain", "fromshot-api.Domain\fromshot-api.Domain.csproj", "{A9BF02B0-951F-429B-AC37-0A9CCCB302E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fromshot-api.Services", "fromshot-api.Services\fromshot-api.Services.csproj", "{A30D5D96-CB74-4508-B35D-82156F4BA42C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fromshot-api.Repositories", "fromshot-api.Repositories\fromshot-api.Repositories.csproj", "{32C68E68-CC87-4EFE-9ADF-83D0342E1482}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fromshot-api.Common", "fromshot-api.Common\fromshot-api.Common.csproj", "{5CB07C25-ACE4-419A-89BC-B3C0E8594982}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98105F07-8091-432F-ACBF-07318C4E3E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98105F07-8091-432F-ACBF-07318C4E3E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98105F07-8091-432F-ACBF-07318C4E3E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98105F07-8091-432F-ACBF-07318C4E3E47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9BF02B0-951F-429B-AC37-0A9CCCB302E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9BF02B0-951F-429B-AC37-0A9CCCB302E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9BF02B0-951F-429B-AC37-0A9CCCB302E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9BF02B0-951F-429B-AC37-0A9CCCB302E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30D5D96-CB74-4508-B35D-82156F4BA42C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30D5D96-CB74-4508-B35D-82156F4BA42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30D5D96-CB74-4508-B35D-82156F4BA42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30D5D96-CB74-4508-B35D-82156F4BA42C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32C68E68-CC87-4EFE-9ADF-83D0342E1482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32C68E68-CC87-4EFE-9ADF-83D0342E1482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32C68E68-CC87-4EFE-9ADF-83D0342E1482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32C68E68-CC87-4EFE-9ADF-83D0342E1482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CB07C25-ACE4-419A-89BC-B3C0E8594982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CB07C25-ACE4-419A-89BC-B3C0E8594982}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CB07C25-ACE4-419A-89BC-B3C0E8594982}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CB07C25-ACE4-419A-89BC-B3C0E8594982}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
