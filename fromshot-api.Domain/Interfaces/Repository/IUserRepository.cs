@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Domain.Interfaces
+namespace fromshot_api.Domain.Interfaces.Repository
 {
     public interface IUserRepository
     {
-        UserModel ObterPorId(int id);
-        void Adicionar(UserModel usuario);
+        
+        public Task<string> SignUp();
     }
 }

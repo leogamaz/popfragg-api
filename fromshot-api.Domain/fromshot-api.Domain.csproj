@@ -5,4 +5,7 @@
     <RootNamespace>fromshot_api.Domain</RootNamespace>
     <AssemblyName>fromshot-api.Domain</AssemblyName>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="supabase" Version="1.1.1" />
+  </ItemGroup>
 </Project>

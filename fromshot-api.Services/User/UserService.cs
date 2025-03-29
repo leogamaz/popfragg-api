@@ -1,4 +1,5 @@
-﻿using fromshot_api.Domain.Interfaces;
+﻿using fromshot_api.Domain.Interfaces.Repository;
+using fromshot_api.Domain.Interfaces.Service;
 using fromshot_api.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -8,25 +9,18 @@ using System.Threading.Tasks;
 
 namespace fromshot_api.Services.User
 {
-    public class UserService
+    public class UserService(IUserRepository usuarioRepository)  : IUserService
     {
-        private readonly IUserRepository _usuarioRepository;
+        private readonly IUserRepository _usuarioRepository = usuarioRepository;
 
-        public UserService(IUserRepository usuarioRepository)
+        //public UserModel ObterUsuario(int id)
+        //{
+        //    return _usuarioRepository.ObterPorId(id);
+        //}
+
+        public async Task<string> CriarUsuario()
         {
-            _usuarioRepository = usuarioRepository;
-        }
-
-        public UserModel ObterUsuario(int id)
-        {
-            return _usuarioRepository.ObterPorId(id);
-        }
-
-        public void CriarUsuario(string nome, string email)
-        {
-            var usuario = new UserModel { Nome = nome, Email = email };
-
-            _usuarioRepository.Adicionar(usuario);
+            return await _usuarioRepository.SignUp();
         }
     }
 }

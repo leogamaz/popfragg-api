@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Services
+namespace fromshot_api.Domain.Interfaces.Repository
 {
-    public class Class1
+    public interface IAuthRepository
     {
     }
 }

@@ -1,26 +1,48 @@
-﻿using fromshot_api.Domain.Interfaces;
-using fromshot_api.Domain.Models;
+﻿using fromshot_api.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using fromshot_api.Domain.Interfaces.Repository;
+using Supabase;
+using Supabase.Interfaces;
+
 
 namespace fromshot_api.Repositories.User
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository(Client supabaseClient, Client supabaseAdminClient) : IUserRepository
     {
-        private static List<UserModel> _usuarios = new();
+        private readonly List<UserModel> _usuarios = [];
+        private readonly Client _supabaseClient = supabaseClient;
+        private readonly Client _supabaseAdminClient = supabaseAdminClient;
+        //public UserModel ObterPorId(int id)
+        //{
 
-        public UserModel ObterPorId(int id)
-        {
-            return _usuarios.FirstOrDefault(u => u.Id == id);
-        }
+        //    return _usuarios.FirstOrDefault(u => u.Id == id);
+        //}
 
-        public void Adicionar(UserModel usuario)
+        public async  Task<string> SignUp()
         {
-            usuario.Id = _usuarios.Count + 1;
-            _usuarios.Add(usuario);
+            try
+            {
+                var user = new UserModel
+                {
+                    Nome = "Leo",
+                    Username = "Skill",
+                    Email = "teste@teste.com",
+                    Status = "Ativo",
+                    
+                };
+
+                var result = await _supabaseClient.From<UserModel>().Insert(user);
+                var result2 = await _supabaseClient.From<UserModel>().Get();
+                //logica para adicionar o supabase
+                return "teste";
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Erro no KeyCloak " + ex);
+            }
         }
     }
 }

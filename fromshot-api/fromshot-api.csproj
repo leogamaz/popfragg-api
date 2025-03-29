@@ -12,10 +12,15 @@
     <PackageReference Include="Keycloak.AuthServices.Authentication" Version="1.2.1" />
     <PackageReference Include="Keycloak.AuthServices.Authorization" Version="1.2.1" />
     <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.1" />
+    <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.3.0" />
+    <PackageReference Include="supabase" Version="1.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\fromshot-api.Common\fromshot-api.Common.csproj" />
     <ProjectReference Include="..\fromshot-api.Domain\fromshot-api.Domain.csproj" />
     <ProjectReference Include="..\fromshot-api.Repositories\fromshot-api.Repositories.csproj" />
     <ProjectReference Include="..\fromshot-api.Services\fromshot-api.Services.csproj" />

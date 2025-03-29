@@ -1,18 +1,30 @@
 using fromshot_api.Configurations;
-using Keycloak.AuthServices.Authentication;
-using Keycloak.AuthServices.Authorization;
-using Keycloak.AuthServices.Sdk.Admin;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using fromshot_api.Common.Services; 
 using Microsoft.OpenApi.Models;
+using Serilog;
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+LoggingService.ConfigureSerilog(builder.Configuration);
+builder.Host.UseSerilog();
 
 builder.Services.ConfigureServices();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddKeycloakServices(builder.Configuration);
+
+//TODO COLOCAR EM UM ARQUIVO SEPARADO CLIENTES HTTPS PERSONALIZADOS
+builder.Services.AddHttpClient("steamOpenId", client =>
+{
+    client.BaseAddress = new Uri("https://steamcommunity.com/openid/");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+
+builder.Services.AddSupabaseServices(builder.Configuration);
 
 
 builder.Services.AddSwaggerGen(c =>
@@ -30,10 +42,20 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200") // Substitua pela sua origem real
+                   .AllowAnyHeader()
+                   .AllowAnyMethod()
+                    .AllowCredentials(); // Permite o envio de cookies
+        });
+});
 
 var app = builder.Build();
+
 
 // Configuração do pipeline de requisições
 if (app.Environment.IsDevelopment())
@@ -41,13 +63,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API v1");
-        c.RoutePrefix = string.Empty;
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "FromShot v1");
+        c.RoutePrefix = "swagger";
     });
+    
 }
 
-app.UseHttpsRedirection();
 
+// Adiciona HTTPS
+//app.UseHttpsRedirection();
+
+// Adiciona CORS
+app.UseCors("AllowSpecificOrigin");
+
+// Middleware de tratamento de erros
+//app.UseExceptionHandler("/error");
+app.UseMiddleware<ExceptionMiddleware>();
+app.UseStatusCodePages();
+
+// Adiciona autenticação e autorização
 app.UseAuthentication();
 app.UseAuthorization();
 
