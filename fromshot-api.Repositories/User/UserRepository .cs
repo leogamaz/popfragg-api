@@ -12,9 +12,7 @@ namespace fromshot_api.Repositories.User
 {
     public class UserRepository(Client supabaseClient, Client supabaseAdminClient) : IUserRepository
     {
-        private readonly List<UserModel> _usuarios = [];
         private readonly Client _supabaseClient = supabaseClient;
-        private readonly Client _supabaseAdminClient = supabaseAdminClient;
         //public UserModel ObterPorId(int id)
         //{
 
