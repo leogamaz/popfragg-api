@@ -8,8 +8,8 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-LoggingService.ConfigureSerilog(builder.Configuration);
-builder.Host.UseSerilog();
+//LoggingService.ConfigureSerilog(builder.Configuration);
+//builder.Host.UseSerilog();
 
 builder.Services.ConfigureServices();
 builder.Services.AddControllers();
@@ -24,7 +24,7 @@ builder.Services.AddHttpClient("steamOpenId", client =>
 });
 
 
-builder.Services.AddSupabaseServices(builder.Configuration);
+//builder.Services.AddSupabaseServices(builder.Configuration);
 
 
 builder.Services.AddSwaggerGen(c =>

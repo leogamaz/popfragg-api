@@ -1,18 +1,14 @@
 ﻿using fromshot_api.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using fromshot_api.Domain.Interfaces.Repository;
-using Supabase;
-using Supabase.Interfaces;
+
 
 
 namespace fromshot_api.Repositories.User
 {
-    public class UserRepository(Client supabaseClient, Client supabaseAdminClient) : IUserRepository
+    public class UserRepository() : IUserRepository
     {
-        private readonly Client _supabaseClient = supabaseClient;
         //public UserModel ObterPorId(int id)
         //{
 
@@ -31,9 +27,7 @@ namespace fromshot_api.Repositories.User
                     Status = "Ativo",
                     
                 };
-
-                var result = await _supabaseClient.From<UserModel>().Insert(user);
-                var result2 = await _supabaseClient.From<UserModel>().Get();
+               
                 //logica para adicionar o supabase
                 return "teste";
             }

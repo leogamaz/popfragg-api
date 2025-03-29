@@ -6,20 +6,24 @@ using fromshot_api.Domain.Models;
 using fromshot_api.Domain.Interfaces.Service;
 using fromshot_api.Helper;
 using Supabase.Realtime.Converters;
+using fromshot_api.Common.Repository;
 
 namespace fromshot_api.Controllers
 {
 //    [Authorize] // Exige autenticação para todas as ações deste controller
     [Route("[controller]")] // Define a rota base com o nome do controller (Home)
-    public class AuthController(IAuthService authService, IUserService userService) : ControllerBase
+    public class AuthController(IAuthService authService, IUserService userService, ConnectionStrings connectionStrings) : ControllerBase
     {
         private readonly IAuthService _authService = authService;
         private readonly IUserService _userSerivce = userService;
+        private readonly ConnectionStrings _connectionStrings = connectionStrings;  
 
         [HttpPost("sign_in_steam")]
         public async Task<IActionResult> SigInSteam([FromBody] OpenIdAuthModel steamParams)
         {
             //string steamId =  _authService.AuthSteam(steamParams)  
+
+            
             string origin = Request.Headers["Origin"].ToString();
 
             string steamId = await _authService.AuthSteam(steamParams);
@@ -39,8 +43,8 @@ namespace fromshot_api.Controllers
         public async Task<IActionResult> teste()
         {
             Response.Cookies.Append("steamId", "o maldito do token", HttpRequestsHelper.SetCookieOptions(15));
-
-            return Ok("stringgg");
+            string conn = _connectionStrings.Authorizer;
+            return Ok(conn);
         }
 
     }
