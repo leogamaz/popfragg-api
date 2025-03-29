@@ -54,6 +54,13 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Força Kestrel a escutar na porta 80 (padrão do container)
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(80); // 
+});
+
+
 var app = builder.Build();
 
 
