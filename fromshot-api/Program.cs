@@ -1,7 +1,7 @@
-using fromshot_api.Configurations;
-using fromshot_api.Common.Services; 
+using fromshot_api.Common.Repository;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using fromshot_api.Middlewares;
 
 
 
@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 //LoggingService.ConfigureSerilog(builder.Configuration);
 //builder.Host.UseSerilog();
+
+
 
 builder.Services.ConfigureServices();
 builder.Services.AddControllers();
@@ -23,8 +25,14 @@ builder.Services.AddHttpClient("steamOpenId", client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
+builder.Services.AddHttpClient("authorizer", client =>
+{
+    client.BaseAddress = new Uri("https://authorizer-production-a43d.up.railway.app");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
-//builder.Services.AddSupabaseServices(builder.Configuration);
+var connectionStrings = new ConnectionStrings(builder.Configuration);
+builder.Services.AddAuthorizerService(connectionStrings);
 
 
 builder.Services.AddSwaggerGen(c =>
@@ -63,7 +71,6 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 
 var app = builder.Build();
 
-
 // Configuração do pipeline de requisições
 if (app.Environment.IsDevelopment())
 {
@@ -85,7 +92,7 @@ app.UseCors("AllowSpecificOrigin");
 
 // Middleware de tratamento de erros
 //app.UseExceptionHandler("/error");
-app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseStatusCodePages();
 
 // Adiciona autenticação e autorização

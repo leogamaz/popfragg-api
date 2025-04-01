@@ -9,7 +9,7 @@ using System.Web;
 
 namespace fromshot_api.Helper
 {
-    public static class HttpRequestsHelper
+    public static class HttpRequests
     {
         public static CookieOptions SetCookieOptions(int minutes)
         {

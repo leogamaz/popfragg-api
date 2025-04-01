@@ -1,25 +1,31 @@
-﻿using fromshot_api.Domain.Interfaces.Common.Helpers;
+﻿using fromshot_api.Common.Exceptions;
+using fromshot_api.Common.Helpers;
+using fromshot_api.Common.Helpers.Querys;
+using fromshot_api.Domain.DTOS.Authorizer;
+using fromshot_api.Domain.DTOS.Steam;
+using fromshot_api.Domain.Interfaces.Common.Helpers;
 using fromshot_api.Domain.Interfaces.Repository;
 using fromshot_api.Domain.Interfaces.Service;
-using fromshot_api.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace fromshot_api.Services.Auth
 {
-    public class AuthService(IOpenIdBuildParamsHelper openIdParamsHelper, ISteamRepository steamRepository) : IAuthService
+    public class AuthService(IOpenIdBuildParams openIdParamsHelper, ISteamRepository steamRepository, IAuthRepository authRepository ,IHttpClientFactory factory) : IAuthService
     {
-        private readonly IOpenIdBuildParamsHelper _openIdParamsHelper = openIdParamsHelper;
+        private readonly IOpenIdBuildParams _openIdParamsHelper = openIdParamsHelper;
         private readonly ISteamRepository _steamRepository = steamRepository;
-
-        public async Task<string> AuthSteam(OpenIdAuthModel steamParams)
+        private readonly IAuthRepository _authRepository = authRepository;
+        private readonly HttpClient _client = factory.CreateClient("authorizer");
+        public async Task<string> AuthSteam(OpenIdAuth steamParams)
         {
             //verificar null dos parametros claim_id e identity
-            if (!_openIdParamsHelper.CheckSignaturesOpenId(steamParams))
+            if (!_openIdParamsHelper.CheckSignaturesOpenId(steamParams) && steamParams == null)
             {
                 throw new UnauthorizedAccessException("Acesso Negado");
             }
@@ -38,6 +44,8 @@ namespace fromshot_api.Services.Auth
             }
 
             //obter o steam id
+            _ = steamParams.ClaimedId ?? throw new UnauthorizedAccessException("Acesso Negado");
+            
             string steamId = steamParams.ClaimedId.Replace("https://steamcommunity.com/openid/id/", "");
 
             _ = steamId ?? throw new UnauthorizedAccessException("Acesso Negado");
@@ -45,6 +53,35 @@ namespace fromshot_api.Services.Auth
             //TO DO Adicionar nonce do open id no REDIS
 
             return steamId;
+        }
+
+        public async Task<string> SignUpWithSteam(SignUpSteamRequest variables)
+        {
+
+            string signUpQuery = GraphQL.GetSignUpQuery();
+
+            string steamId = variables.AppData.SteamId;
+            string nickname = variables.Nickname;
+
+            Guard.AgainstTrue(await _authRepository.SteamIdExisteAsync(steamId), "SteamID já foi vinculado a uma conta existente",ErrorCodes.SteamIdAlreadyInUse);
+
+            Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(steamId), "Já existe um usuário com este nic", ErrorCodes.BusinessError);
+
+            var requestBody = new
+            {
+                query = signUpQuery,
+                variables = new
+                {
+                    data = variables
+                }
+            };
+            var json = Json.SerializeSnakeCase(requestBody);
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/graphql", content);
+            var rawResponse = await response.Content.ReadAsStringAsync();
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync(); 
         }
     }
 }

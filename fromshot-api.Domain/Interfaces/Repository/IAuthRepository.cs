@@ -8,5 +8,7 @@ namespace fromshot_api.Domain.Interfaces.Repository
 {
     public interface IAuthRepository
     {
+        public Task<bool> SteamIdExisteAsync(string steamId);
+        public Task<bool> NicknameExisteAsync(string nickname);
     }
 }

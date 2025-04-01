@@ -1,5 +1,5 @@
 ﻿using fromshot_api.Domain.Interfaces.Repository;
-using fromshot_api.Domain.Models;
+using fromshot_api.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,30 +1,31 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using fromshot_api.Repositories;
-using fromshot_api.Services;
-using fromshot_api.Services.User;
-using fromshot_api.Repositories.User;
+﻿using fromshot_api.Repositories.User;
 using fromshot_api.Domain.Interfaces.Service;
 using fromshot_api.Services.Auth;
 using fromshot_api.Domain.Interfaces.Repository;
 using fromshot_api.Repositories.Auth;
 using fromshot_api.Domain.Interfaces.Common.Helpers;
 using fromshot_api.Common.Helpers;
-using Keycloak.Net;
 using fromshot_api.Common.Repository;
 
-namespace fromshot_api.Configurations
+namespace fromshot_api.Middlewares
 {
-    public static class ServicesConfig
+    public static class Services
     {
         public static void ConfigureServices(this IServiceCollection services)
         {
             // Adicionar serviços à injeção de dependência
+            services.AddSingleton<ConnectionStrings>(sp =>
+            {
+                var config = sp.GetRequiredService<IConfiguration>();
+                return new ConnectionStrings(config);
+            });
+
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService,UserService>();
+            //services.AddScoped<IUserService,UserService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<ISteamRepository, SteamRepository>();
-            services.AddScoped<IOpenIdBuildParamsHelper, OpenIdBuildParamsHelper>();
+            services.AddScoped<IOpenIdBuildParams, OpenIdBuildParams>();
             services.AddSingleton<ConnectionStrings>();
         }
     }

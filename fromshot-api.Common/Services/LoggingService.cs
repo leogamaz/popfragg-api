@@ -40,16 +40,16 @@ namespace fromshot_api.Common.Services
         //}
 
 
-        public class CustomExceptionMessageColumnWriter : ColumnWriterBase
-        {
-            public CustomExceptionMessageColumnWriter() : base(NpgsqlDbType.Text) { }
+        //public class CustomExceptionMessageColumnWriter : ColumnWriterBase
+        //{
+        //    public CustomExceptionMessageColumnWriter() : base(NpgsqlDbType.Text) { }
 
-            // Sobrescrever para retornar a mensagem da exceção
-            public override object GetValue(LogEvent logEvent, IFormatProvider formatProvider)
-            {
-                // Retorna a mensagem da exceção, se houver, ou null
-                return logEvent.Exception?.Message;
-            }
-        }
+        //    // Sobrescrever para retornar a mensagem da exceção
+        //    public override object GetValue(LogEvent logEvent, IFormatProvider formatProvider)
+        //    {
+        //        // Retorna a mensagem da exceção, se houver, ou null
+        //        return logEvent.Exception?.Message;
+        //    }
+        //}
     }
 }

@@ -1,5 +1,5 @@
-﻿using fromshot_api.Domain.Interfaces.Common.Helpers;
-using fromshot_api.Domain.Models;
+﻿using fromshot_api.Domain.DTOS.Steam;
+using fromshot_api.Domain.Interfaces.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace fromshot_api.Common.Helpers
 {
-    public class OpenIdBuildParamsHelper : IOpenIdBuildParamsHelper
+    public class OpenIdBuildParams : IOpenIdBuildParams
     {
 
-        public FormUrlEncodedContent BuildParamsSteamAuthentication( OpenIdAuthModel steamParams)
+        public FormUrlEncodedContent BuildParamsSteamAuthentication( OpenIdAuth steamParams)
         {
             ArgumentNullException.ThrowIfNull(steamParams);
 
@@ -46,7 +46,7 @@ namespace fromshot_api.Common.Helpers
             return content;
         }
 
-        public bool CheckSignaturesOpenId(OpenIdAuthModel steamParams)
+        public bool CheckSignaturesOpenId(OpenIdAuth steamParams)
         {
             ArgumentNullException.ThrowIfNull(steamParams);
 

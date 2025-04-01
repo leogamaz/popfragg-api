@@ -1,4 +1,5 @@
-﻿using fromshot_api.Domain.Models;
+﻿using fromshot_api.Domain.DTOS.Authorizer;
+using fromshot_api.Domain.DTOS.Steam;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace fromshot_api.Domain.Interfaces.Service
 {
     public interface IAuthService
     {
-        public Task<string> AuthSteam(OpenIdAuthModel steamParams);
+        public Task<string> AuthSteam(OpenIdAuth steamParams);
+        public Task<string> SignUpWithSteam(SignUpSteamRequest variables);
     }
 }

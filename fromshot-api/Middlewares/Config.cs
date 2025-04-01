@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace fromshot_api.Configurations
+namespace fromshot_api.Middlewares
 {
-    public class MiddlewareConfig
+    public class Config
     {
         public static void ConfigureMiddleware( IServiceCollection services)
         {
