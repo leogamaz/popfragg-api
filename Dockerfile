@@ -2,21 +2,25 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copia tudo para a imagem
+# Copia apenas o csproj e restaura dependÃªncias (melhor uso de cache)
+COPY fromshot-api/*.csproj ./fromshot-api/
+RUN dotnet restore ./fromshot-api/fromshot-api.csproj
+
+# Copia o restante do cÃ³digo
 COPY . .
 
-# Restaura dependências
-RUN dotnet restore
-
-# Publica o projeto principal
+# Publica o projeto
 RUN dotnet publish fromshot-api/fromshot-api.csproj -c Release -o /app/publish
 
 # Etapa final (runtime)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
-# Copia os arquivos da publicação
+# Define ambiente
+ENV ASPNETCORE_ENVIRONMENT=Development
+
+# Copia os arquivos publicados
 COPY --from=build /app/publish .
 
-# Define o ponto de entrada
+# Executa a aplicaÃ§Ã£o
 ENTRYPOINT ["dotnet", "fromshot-api.dll"]
