@@ -58,7 +58,7 @@ namespace fromshot_api.Middlewares
                 }
 
                 // Só mostra o erro real no ambiente de desenvolvimento
-                if (_env.IsDevelopment())
+                if (_env.IsDevelopment() || _env.IsStaging())
                 {
                     response.Detail = ex.ToString();
                 }
