@@ -10,5 +10,7 @@ namespace fromshot_api.Domain.Interfaces.Repository
     {
         public Task<bool> SteamIdExisteAsync(string steamId);
         public Task<bool> NicknameExisteAsync(string nickname);
+
+        public Task<bool> teste();
     }
 }

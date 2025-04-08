@@ -63,6 +63,7 @@ namespace fromshot_api.Services.Auth
             string steamId = variables.AppData.SteamId;
             string nickname = variables.Nickname;
 
+            //await _authRepository.teste();
             Guard.AgainstTrue(await _authRepository.SteamIdExisteAsync(steamId), "SteamID já foi vinculado a uma conta existente",ErrorCodes.SteamIdAlreadyInUse);
 
             Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(steamId), "Já existe um usuário com este nic", ErrorCodes.BusinessError);

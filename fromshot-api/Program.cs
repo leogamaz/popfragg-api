@@ -1,15 +1,17 @@
-using fromshot_api.Common.Repository;
+using fromshot_api.Common.Configurations;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using fromshot_api.Middlewares;
+using fromshot_api.Configurations;
+using fromshot_api.Middlewares.Staging;
 
 
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-//LoggingService.ConfigureSerilog(builder.Configuration);
-//builder.Host.UseSerilog();
+SerilogConfiguration.ConfigureSerilog(builder.Configuration);
+builder.Host.UseSerilog();
 
 
 
@@ -31,7 +33,7 @@ builder.Services.AddHttpClient("authorizer", client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
-var connectionStrings = new ConnectionStrings(builder.Configuration);
+var connectionStrings = new EnvironmentConfig(builder.Configuration);
 builder.Services.AddAuthorizerService(connectionStrings);
 
 
@@ -100,5 +102,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseStagingAuth(app.Environment);
 
 app.Run();

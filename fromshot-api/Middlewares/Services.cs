@@ -5,7 +5,10 @@ using fromshot_api.Domain.Interfaces.Repository;
 using fromshot_api.Repositories.Auth;
 using fromshot_api.Domain.Interfaces.Common.Helpers;
 using fromshot_api.Common.Helpers;
-using fromshot_api.Common.Repository;
+using Npgsql;
+using fromshot_api.Common.Repository.DataBaseConnection;
+using fromshot_api.Domain.Interfaces.Common.DataBaseConnection;
+using fromshot_api.Common.Configurations;
 
 namespace fromshot_api.Middlewares
 {
@@ -14,10 +17,10 @@ namespace fromshot_api.Middlewares
         public static void ConfigureServices(this IServiceCollection services)
         {
             // Adicionar serviços à injeção de dependência
-            services.AddSingleton<ConnectionStrings>(sp =>
+            services.AddSingleton<EnvironmentConfig>(sp =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();
-                return new ConnectionStrings(config);
+                return new EnvironmentConfig(config);
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -26,7 +29,8 @@ namespace fromshot_api.Middlewares
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<ISteamRepository, SteamRepository>();
             services.AddScoped<IOpenIdBuildParams, OpenIdBuildParams>();
-            services.AddSingleton<ConnectionStrings>();
+            services.AddScoped<IReadOnlyDbConnection, ReadOnlyDbConnection>();
+            services.AddScoped<IWriteDbConnection, WriteDbConnection>();
         }
     }
 }
