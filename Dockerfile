@@ -2,25 +2,25 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copia apenas o csproj e restaura dependências (melhor uso de cache)
-COPY fromshot-api/*.csproj ./fromshot-api/
-RUN dotnet restore ./fromshot-api/fromshot-api.csproj
+# Copia apenas o .csproj da API (para melhor aproveitamento de cache)
+COPY popfragg.Api/popfragg.Api.csproj ./popfragg.Api/
+RUN dotnet restore ./popfragg.Api/popfragg.Api.csproj
 
-# Copia o restante do código
+# Copia o restante da aplicação
 COPY . .
 
 # Publica o projeto
-RUN dotnet publish fromshot-api/fromshot-api.csproj -c Release -o /app/publish
+RUN dotnet publish ./popfragg.Api/popfragg.Api.csproj -c Release -o /app/publish
 
 # Etapa final (runtime)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
-# Define ambiente
+# Define ambiente (você pode sobrescrever em produção)
 ENV ASPNETCORE_ENVIRONMENT=Development
 
-# Copia os arquivos publicados
+# Copia os arquivos da etapa de build
 COPY --from=build /app/publish .
 
-# Executa a aplicação
-ENTRYPOINT ["dotnet", "fromshot-api.dll"]
+# Define o ponto de entrada da aplicação
+ENTRYPOINT ["dotnet", "popfragg.Api.dll"]

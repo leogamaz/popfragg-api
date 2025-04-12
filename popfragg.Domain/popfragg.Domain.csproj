@@ -3,7 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
-    <RootNamespace>fromshot_api.Domain</RootNamespace>
-    <AssemblyName>fromshot-api.Domain</AssemblyName>
+    <RootNamespace>popfragg.Domain</RootNamespace>
+    <AssemblyName>popfragg-api.Domain</AssemblyName>
   </PropertyGroup>
 </Project>

@@ -74,11 +74,12 @@ namespace fromshot_api.Middlewares
 
 
                 var codeMessage = response.Extensions.TryGetValue("code_message", out var value) ? value?.ToString() : "Unknown";
+
                 using (LogContext.PushProperty("trace_id", traceId))
                 using (LogContext.PushProperty("path", path))
                 using (LogContext.PushProperty("message_user", message))
                 using (LogContext.PushProperty("code_message", codeMessage))
-                using (LogContext.PushProperty("status_code", 422))
+                using (LogContext.PushProperty("status_code",statusCode ))
                 {
                     _logger.LogError(ex, "Erro inesperado. Código: {codeMessage}, TraceId: {TraceId}, Message: {message}", codeMessage, traceId,message);
                 }

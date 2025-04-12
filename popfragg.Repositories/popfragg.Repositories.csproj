@@ -3,8 +3,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
-    <RootNamespace>fromshot_api.Repositories</RootNamespace>
-    <AssemblyName>fromshot-api.Repositories</AssemblyName>
+    <RootNamespace>popfragg.Repositories</RootNamespace>
+    <AssemblyName>popfragg-api.Repositories</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
@@ -12,7 +12,7 @@
     <PackageReference Include="Npgsql" Version="9.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\fromshot-api.Domain\fromshot-api.Domain.csproj" />
-    <ProjectReference Include="..\fromshot-api.Common\fromshot-api.Common.csproj" />
+    <ProjectReference Include="..\popfragg.Domain\popfragg.Domain.csproj" />
+    <ProjectReference Include="..\popfragg.Common\popfragg.Common.csproj" />
   </ItemGroup>
 </Project>
