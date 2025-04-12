@@ -1,4 +1,5 @@
-﻿using fromshot_api.Configurations.Serilog.Writers;
+﻿using fromshot_api.Common.Exceptions;
+using fromshot_api.Configurations.Serilog.Writers;
 using Serilog;
 using Serilog.Events;
 using Serilog.Exceptions;
@@ -19,6 +20,7 @@ namespace fromshot_api.Configurations.Serilog
                 .Enrich.FromLogContext()
                 .Enrich.WithExceptionDetails()
                 .WriteTo.Console()
+                .Filter.ByExcluding(logEvent => ShouldIgnoreException(logEvent.Exception))
                 .WriteTo.PostgreSQL(
                     connectionString: configuration.GetConnectionString("WriteDataBase"),
                     tableName: "log.logs",
@@ -41,6 +43,12 @@ namespace fromshot_api.Configurations.Serilog
                     restrictedToMinimumLevel: LogEventLevel.Error
                 )
                 .CreateLogger();
+        }
+
+        private static bool ShouldIgnoreException(Exception? ex)
+        {
+            return ex is BusinessException 
+                || ex is ValidationException;
         }
     }
 }

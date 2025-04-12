@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>fromshot_api</RootNamespace>
+    <RootNamespace>popfragg</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,10 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\fromshot-api.Common\fromshot-api.Common.csproj" />
-    <ProjectReference Include="..\fromshot-api.Domain\fromshot-api.Domain.csproj" />
-    <ProjectReference Include="..\fromshot-api.Repositories\fromshot-api.Repositories.csproj" />
-    <ProjectReference Include="..\fromshot-api.Services\fromshot-api.Services.csproj" />
+    <ProjectReference Include="..\popfragg.Common\popfragg.Common.csproj" />
+    <ProjectReference Include="..\popfragg.Domain\popfragg.Domain.csproj" />
+    <ProjectReference Include="..\popfragg.Repositories\popfragg.Repositories.csproj" />
+    <ProjectReference Include="..\popfragg.Services\popfragg.Services.csproj" />
   </ItemGroup>
 
 </Project>
