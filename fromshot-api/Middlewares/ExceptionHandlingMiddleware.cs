@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using fromshot_api.Common.Exceptions;
+using Microsoft.Extensions.Logging;
+using Serilog.Context;
+using System.IO;
 
 namespace fromshot_api.Middlewares
 {
@@ -20,7 +23,8 @@ namespace fromshot_api.Middlewares
             {
                 var traceId = context.TraceIdentifier;
                 var message = ex.Message;
-                var statusCode = ex switch
+                var path = context.Request.Path;
+                int statusCode = ex switch
                 {
                     UnauthorizedAccessException => StatusCodes.Status403Forbidden,
                     ArgumentException => StatusCodes.Status400BadRequest,
@@ -32,8 +36,7 @@ namespace fromshot_api.Middlewares
                     _ => StatusCodes.Status500InternalServerError
                 };
 
-                // Loga o erro com traceId
-                _logger.LogError(ex, "Erro tratado capturado no middleware. TraceId: {TraceId}", traceId);
+                
 
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = statusCode;
@@ -52,7 +55,7 @@ namespace fromshot_api.Middlewares
                             _ => "Erro interno no servidor"
                         },
                     Status = statusCode,
-                    Instance = context.Request.Path,
+                    Instance = path,
                     Extensions = { ["traceId"] = traceId },
                     
                 };
@@ -60,13 +63,24 @@ namespace fromshot_api.Middlewares
 
                 if (ex is IHasErrorCode withCode)
                 {
-                    response.Extensions["code"] = withCode.Code;
+                    response.Extensions["code_message"] = withCode.Code;
                 }
 
                 // Só mostra o erro real no ambiente de desenvolvimento
                 if (_env.IsDevelopment() || _env.IsStaging())
                 {
                     response.Detail = ex.ToString();
+                }
+
+
+                var codeMessage = response.Extensions.TryGetValue("code_message", out var value) ? value?.ToString() : "Unknown";
+                using (LogContext.PushProperty("trace_id", traceId))
+                using (LogContext.PushProperty("path", path))
+                using (LogContext.PushProperty("message_user", message))
+                using (LogContext.PushProperty("code_message", codeMessage))
+                using (LogContext.PushProperty("status_code", 422))
+                {
+                    _logger.LogError(ex, "Erro inesperado. Código: {codeMessage}, TraceId: {TraceId}, Message: {message}", codeMessage, traceId,message);
                 }
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(response));

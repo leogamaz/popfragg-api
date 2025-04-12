@@ -2,9 +2,9 @@ using fromshot_api.Common.Configurations;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using fromshot_api.Middlewares;
-using fromshot_api.Configurations;
 using fromshot_api.Middlewares.Staging;
 using fromshot_api.Common.Http;
+using fromshot_api.Configurations.Serilog;
 
 
 
