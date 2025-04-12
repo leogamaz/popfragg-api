@@ -33,8 +33,8 @@ namespace fromshot_api.Configurations
                         ["trace_id"] = new SinglePropertyColumnWriter("trace_id"),
                         ["path"] = new SinglePropertyColumnWriter("path"),
                         ["extra_field"] = new SinglePropertyColumnWriter("ExtraField")
-                    }
-                    //restrictedToMinimumLevel: LogEventLevel.Error
+                    },
+                    restrictedToMinimumLevel: LogEventLevel.Error
                 )
                 .CreateLogger();
         }
