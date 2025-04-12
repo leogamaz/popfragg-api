@@ -9,6 +9,9 @@ using Npgsql;
 using fromshot_api.Common.Repository.DataBaseConnection;
 using fromshot_api.Domain.Interfaces.Common.DataBaseConnection;
 using fromshot_api.Common.Configurations;
+using fromshot_api.Common.Http;
+using fromshot_api.Domain.Interfaces.ExternalApiService;
+using fromshot_api.Services.ExternalApiService.Authorizer;
 
 namespace fromshot_api.Middlewares
 {
@@ -20,7 +23,8 @@ namespace fromshot_api.Middlewares
             services.AddSingleton<EnvironmentConfig>(sp =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();
-                return new EnvironmentConfig(config);
+                var env = sp.GetRequiredService<IWebHostEnvironment>();
+                return new EnvironmentConfig(config, env.EnvironmentName);
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -31,6 +35,9 @@ namespace fromshot_api.Middlewares
             services.AddScoped<IOpenIdBuildParams, OpenIdBuildParams>();
             services.AddScoped<IReadOnlyDbConnection, ReadOnlyDbConnection>();
             services.AddScoped<IWriteDbConnection, WriteDbConnection>();
+            services.AddScoped<AuthorizerHttpClient>();
+            services.AddScoped<SteamHttpClient>();
+            services.AddScoped<IAuthorizerGraphQLService, AuthoraizerAuthService>();
         }
     }
 }

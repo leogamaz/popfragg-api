@@ -1,9 +1,11 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using fromshot_api.Common.Exceptions;
 
 namespace fromshot_api.Common.Helpers;
 
-public static class Guard
+public static partial class Guard
 {
     public static void AgainstTrue(bool condition, string message, string? code = null)
     {
@@ -25,8 +27,7 @@ public static class Guard
 
     public static void AgainstInvalidEmail(string? email, string message = "Email inválido", string? code = null)
     {
-        if (string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email,
-                @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase))
+        if (string.IsNullOrWhiteSpace(email) || !EmailRegex().IsMatch(email))
         {
             throw new ValidationException(message, code ?? ErrorCodes.ValidationError);
         }
@@ -49,4 +50,17 @@ public static class Guard
         if (!Regex.IsMatch(value, pattern))
             throw new ValidationException(message, code ?? ErrorCodes.ValidationError);
     }
+    public static async Task IfAsync<T>(
+        T? value,
+        Func<T, Task<bool>> predicate,
+        Func<T, Exception> exceptionFactory)
+    {
+        if (value is null) return;
+
+        if (await predicate(value))
+            throw exceptionFactory(value);
+    }
+
+    [GeneratedRegex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase, "pt-BR")]
+    private static partial Regex EmailRegex();
 }

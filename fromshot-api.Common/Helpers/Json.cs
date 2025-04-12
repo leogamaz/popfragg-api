@@ -22,5 +22,9 @@ namespace fromshot_api.Common.Helpers
         {
             return JsonConvert.SerializeObject(obj, _snakeCaseSettings);
         }
+        public static T DeserializeSnakeCase<T>(string json)
+        {
+            return JsonConvert.DeserializeObject<T>(json, _snakeCaseSettings)!;
+        }
     }
 }

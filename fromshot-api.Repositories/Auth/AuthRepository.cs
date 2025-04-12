@@ -4,13 +4,16 @@ using Npgsql;
 using System.Threading.Tasks;
 using System;
 using fromshot_api.Common.Configurations;
+using fromshot_api.Common.Repository;
+using System.Net.Http;
+using fromshot_api.Common.Http;
+using fromshot_api.Common.Helpers.Querys;
+using System.Text;
 
 namespace fromshot_api.Repositories.Auth
 {
-    public class AuthRepository(EnvironmentConfig connectionStrings) : IAuthRepository
+    public class AuthRepository(EnvironmentConfig config) : BaseRepository(config),IAuthRepository 
     {
-        private readonly string _authorizerConnection = connectionStrings.AuthorizerPublic;
-        private readonly string _teste = connectionStrings.WriteDataBase;
         public async Task<bool> SteamIdExisteAsync(string steamId)
         {
             try
@@ -21,7 +24,7 @@ namespace fromshot_api.Repositories.Auth
                 WHERE app_data::jsonb ->> 'steam_id' = @steamid;
                 ";
 
-                await using var conn = new NpgsqlConnection(_authorizerConnection);
+                await using var conn = new NpgsqlConnection(AuthorizerPublic);
                 var count = await conn.ExecuteScalarAsync<long>(sql, new { steamid = steamId });
                 return count > 0;
             }
@@ -39,7 +42,7 @@ namespace fromshot_api.Repositories.Auth
             WHERE app_data::jsonb ->> 'nickname' = @nickname;
         ";
 
-            await using var conn = new NpgsqlConnection(_authorizerConnection);
+            await using var conn = new NpgsqlConnection(AuthorizerPublic);
             var count = await conn.ExecuteScalarAsync<long>(sql, new { nickname });
             return count > 0;
         }
@@ -53,7 +56,7 @@ namespace fromshot_api.Repositories.Auth
                 FROM log.logs
                 ";
 
-                await using var conn = new NpgsqlConnection(_teste);
+                await using var conn = new NpgsqlConnection(WriteDb);
                 var count = await conn.ExecuteScalarAsync<long>(sql);
                 return count > 0;
             }
@@ -62,5 +65,6 @@ namespace fromshot_api.Repositories.Auth
                 throw;
             }
         }
+
     }
 }

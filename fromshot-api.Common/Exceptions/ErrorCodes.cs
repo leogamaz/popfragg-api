@@ -18,5 +18,6 @@ namespace fromshot_api.Common.Exceptions
         public const string UserNotFound = "user_not_found";
         public const string InvalidSteamId = "invalid_steam_id";
         public const string SteamIdAlreadyInUse = "steam_id_already_in_use";
+        public const string EmailAlreadyInUse = "email_already_in_use";
     }
 }

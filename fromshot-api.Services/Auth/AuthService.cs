@@ -1,9 +1,12 @@
 ﻿using fromshot_api.Common.Exceptions;
 using fromshot_api.Common.Helpers;
 using fromshot_api.Common.Helpers.Querys;
-using fromshot_api.Domain.DTOS.Authorizer;
+using fromshot_api.Common.Http;
+using fromshot_api.Domain.DTOS.Authorizer.Requests;
+using fromshot_api.Domain.DTOS.Authorizer.Responses;
 using fromshot_api.Domain.DTOS.Steam;
 using fromshot_api.Domain.Interfaces.Common.Helpers;
+using fromshot_api.Domain.Interfaces.ExternalApiService;
 using fromshot_api.Domain.Interfaces.Repository;
 using fromshot_api.Domain.Interfaces.Service;
 using System;
@@ -16,12 +19,18 @@ using System.Threading.Tasks;
 
 namespace fromshot_api.Services.Auth
 {
-    public class AuthService(IOpenIdBuildParams openIdParamsHelper, ISteamRepository steamRepository, IAuthRepository authRepository ,IHttpClientFactory factory) : IAuthService
+    public class AuthService(
+        IOpenIdBuildParams openIdParamsHelper,
+        ISteamRepository steamRepository,
+        IAuthRepository authRepository , 
+        IAuthorizerGraphQLService authorizerGraphQL
+        ) : IAuthService
     {
         private readonly IOpenIdBuildParams _openIdParamsHelper = openIdParamsHelper;
         private readonly ISteamRepository _steamRepository = steamRepository;
         private readonly IAuthRepository _authRepository = authRepository;
-        private readonly HttpClient _client = factory.CreateClient("authorizer");
+        private readonly IAuthorizerGraphQLService _authorizerGraphQL = authorizerGraphQL;
+
         public async Task<string> AuthSteam(OpenIdAuth steamParams)
         {
             //verificar null dos parametros claim_id e identity
@@ -55,34 +64,43 @@ namespace fromshot_api.Services.Auth
             return steamId;
         }
 
-        public async Task<string> SignUpWithSteam(SignUpSteamRequest variables)
+        public async Task<SignUpResponse> SignUpWithSteam(SignUpRequest request)
         {
 
-            string signUpQuery = GraphQL.GetSignUpQuery();
+            string? steamId = request.AppData?.SteamId;
+            string nickname = request.Nickname;
 
-            string steamId = variables.AppData.SteamId;
-            string nickname = variables.Nickname;
+            await Guard.IfAsync(
+                steamId,
+                _authRepository.SteamIdExisteAsync,
+                id => new BusinessException($"SteamID {id} já foi usado", ErrorCodes.SteamIdAlreadyInUse)
+            );
 
-            //await _authRepository.teste();
-            Guard.AgainstTrue(await _authRepository.SteamIdExisteAsync(steamId), "SteamID já foi vinculado a uma conta existente",ErrorCodes.SteamIdAlreadyInUse);
+            Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(nickname), "Já existe um usuário com este nic", ErrorCodes.BusinessError);
 
-            Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(steamId), "Já existe um usuário com este nic", ErrorCodes.BusinessError);
+            var response = await _authorizerGraphQL.SignUp(request);
+            return response;
 
-            var requestBody = new
-            {
-                query = signUpQuery,
-                variables = new
-                {
-                    data = variables
-                }
-            };
-            var json = Json.SerializeSnakeCase(requestBody);
+        }
 
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("/graphql", content);
-            var rawResponse = await response.Content.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsStringAsync(); 
+        public async Task<SignUpResponse> SignUp(SignUpRequest request)
+        {
+
+            string? steamId = request.AppData?.SteamId;
+            string nickname = request.Nickname;
+
+            //Se possui steam id faz validação se já esta associado a uma conta
+            await Guard.IfAsync(
+                steamId,
+                _authRepository.SteamIdExisteAsync,
+                id => new BusinessException($"SteamID {id} já foi usado", ErrorCodes.SteamIdAlreadyInUse)
+            );
+
+            Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(nickname), "Já existe um usuário com este nick", ErrorCodes.BusinessError);
+
+            var response = await _authorizerGraphQL.SignUp(request);
+
+            return response;
         }
     }
 }

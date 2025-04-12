@@ -1,10 +1,11 @@
-﻿using System;
+﻿using fromshot_api.Domain.DTOS.Authorizer.Requests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Domain.DTOS.Authorizer
+namespace fromshot_api.Domain.DTOS.Steam
 {
     public class SignUpSteamRequest
     {

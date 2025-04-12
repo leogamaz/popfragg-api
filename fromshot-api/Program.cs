@@ -4,6 +4,7 @@ using Serilog;
 using fromshot_api.Middlewares;
 using fromshot_api.Configurations;
 using fromshot_api.Middlewares.Staging;
+using fromshot_api.Common.Http;
 
 
 
@@ -21,19 +22,19 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 //TODO COLOCAR EM UM ARQUIVO SEPARADO CLIENTES HTTPS PERSONALIZADOS
-builder.Services.AddHttpClient("steamOpenId", client =>
+builder.Services.AddHttpClient(HttpClientNames.Steam, client =>
 {
     client.BaseAddress = new Uri("https://steamcommunity.com/openid/");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
-builder.Services.AddHttpClient("authorizer", client =>
+builder.Services.AddHttpClient(HttpClientNames.Authorizer, client =>
 {
     client.BaseAddress = new Uri("https://authorizer-production-a43d.up.railway.app");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
-var connectionStrings = new EnvironmentConfig(builder.Configuration);
+var connectionStrings = new EnvironmentConfig(builder.Configuration, builder.Environment.EnvironmentName);
 builder.Services.AddAuthorizerService(connectionStrings);
 
 
@@ -106,3 +107,5 @@ app.MapControllers();
 app.UseStagingAuth(app.Environment);
 
 app.Run();
+
+public partial class Program { }
