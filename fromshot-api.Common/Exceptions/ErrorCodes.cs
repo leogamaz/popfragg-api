@@ -11,6 +11,7 @@ namespace fromshot_api.Common.Exceptions
         public const string ValidationError = "validation_error";
         public const string BusinessError = "business_error";
         public const string NotFound = "not_found";
+        public const string InfrastrutctureUnavaliable = "infraestructure_unavailable";
 
         // Personalizados:
         public const string PlayerAlreadyInTournament = "player_already_in_tournament";

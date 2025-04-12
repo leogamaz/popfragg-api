@@ -6,6 +6,7 @@ using fromshot_api.Domain.DTOS.Authorizer;
 using fromshot_api.Domain.DTOS.Authorizer.Requests;
 using fromshot_api.Domain.DTOS.Authorizer.Responses;
 using fromshot_api.Domain.Interfaces.ExternalApiService;
+using fromshot_api.Domain.Interfaces.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ using System.Threading.Tasks;
 
 namespace fromshot_api.Services.ExternalApiService.Authorizer
 {
-    public class AuthoraizerAuthService(AuthorizerHttpClient wrapper) : IAuthorizerGraphQLService
+    public class AuthoraizerAuthService(IAuthorizerHttpClient authorizerClient) : IAuthorizerGraphQLService
     {
-        private readonly HttpClient _client = wrapper.Client;
+        private readonly IAuthorizerHttpClient _authorizerClient = authorizerClient;
         private readonly string _graphQLEndpoint = "/graphql";
         private readonly string _contentType = "application/json";
 
@@ -37,8 +38,12 @@ namespace fromshot_api.Services.ExternalApiService.Authorizer
             string json = Json.SerializeSnakeCase(requestBody);
 
             StringContent content = new(json, Encoding.UTF8, _contentType);
-            HttpResponseMessage response = await _client.PostAsync(_graphQLEndpoint, content);
-            response.EnsureSuccessStatusCode();
+
+            HttpResponseMessage response = await _authorizerClient.PostAsync(
+                _graphQLEndpoint,
+                content,
+                "Falha no serviço de autenticação"
+            );
 
             string responseBody = await response.Content.ReadAsStringAsync();
 

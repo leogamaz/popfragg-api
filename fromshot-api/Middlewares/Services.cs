@@ -12,6 +12,7 @@ using fromshot_api.Common.Configurations;
 using fromshot_api.Common.Http;
 using fromshot_api.Domain.Interfaces.ExternalApiService;
 using fromshot_api.Services.ExternalApiService.Authorizer;
+using fromshot_api.Domain.Interfaces.Http;
 
 namespace fromshot_api.Middlewares
 {
@@ -35,9 +36,11 @@ namespace fromshot_api.Middlewares
             services.AddScoped<IOpenIdBuildParams, OpenIdBuildParams>();
             services.AddScoped<IReadOnlyDbConnection, ReadOnlyDbConnection>();
             services.AddScoped<IWriteDbConnection, WriteDbConnection>();
-            services.AddScoped<AuthorizerHttpClient>();
-            services.AddScoped<SteamHttpClient>();
+            services.AddScoped<ISafeHttpClient,SafeHttpClient>();
+            services.AddScoped<IAuthorizerHttpClient, AuthorizerHttpClient>();
+            services.AddScoped<ISteamHttpClient, SteamHttpClient>();
             services.AddScoped<IAuthorizerGraphQLService, AuthoraizerAuthService>();
+
         }
     }
 }

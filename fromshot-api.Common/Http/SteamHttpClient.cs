@@ -1,4 +1,5 @@
-﻿using System;
+﻿using fromshot_api.Domain.Interfaces.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -7,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace fromshot_api.Common.Http
 {
-    public class SteamHttpClient
+    public class SteamHttpClient : ISteamHttpClient
     {
-        public HttpClient Client { get; }
+        private readonly SafeHttpClient _safe;
 
         public SteamHttpClient(IHttpClientFactory factory)
         {
-            Client = factory.CreateClient(HttpClientNames.Steam);
+            var client = factory.CreateClient(HttpClientNames.Steam);
+            _safe = new SafeHttpClient(client);
+
+        }
+        public Task<HttpResponseMessage> PostAsync(string url, HttpContent content, string errorMessage)
+        {
+            return _safe.PostAsync(url, content, errorMessage);
         }
     }
 }

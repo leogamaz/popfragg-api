@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using fromshot_api.Common.Http;
+using fromshot_api.Domain.Interfaces.Http;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
-
-
-namespace fromshot_api.Common.Http
+namespace fromshot_api.Common.Http;
+public class AuthorizerHttpClient : IAuthorizerHttpClient
 {
-    public class AuthorizerHttpClient
-    {
-        public HttpClient Client { get; }
+    private readonly SafeHttpClient _safe;
 
-        public AuthorizerHttpClient(IHttpClientFactory factory)
-        {
-            Client = factory.CreateClient(HttpClientNames.Authorizer);
-        }
+    public AuthorizerHttpClient(IHttpClientFactory factory)
+    {
+        var client = factory.CreateClient(HttpClientNames.Authorizer);
+        _safe = new SafeHttpClient(client);
+    }
+
+    public Task<HttpResponseMessage> PostAsync(string url, HttpContent content, string errorMessage)
+    {
+        return _safe.PostAsync(url, content, errorMessage);
     }
 }

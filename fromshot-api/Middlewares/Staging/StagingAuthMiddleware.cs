@@ -5,7 +5,7 @@ namespace fromshot_api.Middlewares.Staging
     public class StagingAuthMiddleware(RequestDelegate next,EnvironmentConfig environmentConfig)
     {
         private readonly RequestDelegate _next = next;
-        private readonly string _expectedToken = environmentConfig.StagingAuthToken;
+        private readonly string? _expectedToken = environmentConfig.StagingAuthToken;
 
         public async Task InvokeAsync(HttpContext context)
         {

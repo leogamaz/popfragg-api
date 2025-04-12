@@ -19,13 +19,15 @@ namespace fromshot_api.Middlewares
             catch (Exception ex)
             {
                 var traceId = context.TraceIdentifier;
+                var message = ex.Message;
                 var statusCode = ex switch
                 {
                     UnauthorizedAccessException => StatusCodes.Status403Forbidden,
                     ArgumentException => StatusCodes.Status400BadRequest,
                     var e when e is ValidationException => StatusCodes.Status400BadRequest,
-                    var e when e is BusinessException => StatusCodes.Status400BadRequest,
+                    var e when e is BusinessException => StatusCodes.Status422UnprocessableEntity,
                     var e when e is NotFoundException => StatusCodes.Status404NotFound,
+                    var e when e is InfrastructureUnavailableException => StatusCodes.Status503ServiceUnavailable,
                     KeyNotFoundException => StatusCodes.Status404NotFound,
                     _ => StatusCodes.Status500InternalServerError
                 };
@@ -35,6 +37,7 @@ namespace fromshot_api.Middlewares
 
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = statusCode;
+                
 
                 var response = new ProblemDetails
                 {
@@ -45,12 +48,15 @@ namespace fromshot_api.Middlewares
                             BusinessException => "Regra de negócio violada",
                             UnauthorizedAccessException => "Acesso não autorizado",
                             NotFoundException or KeyNotFoundException => "Recurso não encontrado",
+                            InfrastructureUnavailableException => "Serviço indisponivel",
                             _ => "Erro interno no servidor"
                         },
                     Status = statusCode,
                     Instance = context.Request.Path,
-                    Extensions = { ["traceId"] = traceId }
+                    Extensions = { ["traceId"] = traceId },
+                    
                 };
+                response.Extensions["message"] = message;
 
                 if (ex is IHasErrorCode withCode)
                 {
