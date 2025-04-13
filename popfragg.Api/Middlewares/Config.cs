@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace fromshot_api.Middlewares
+namespace popfragg.Middlewares
 {
     public class Config
     {

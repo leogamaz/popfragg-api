@@ -1,16 +1,16 @@
-﻿using fromshot_api.Domain.Interfaces.Repository;
+﻿using popfragg.Domain.Interfaces.Repository;
 using Dapper;
 using Npgsql;
 using System.Threading.Tasks;
 using System;
-using fromshot_api.Common.Configurations;
-using fromshot_api.Common.Repository;
+using popfragg.Common.Configurations;
+using popfragg.Common.Repository;
 using System.Net.Http;
-using fromshot_api.Common.Http;
-using fromshot_api.Common.Helpers.Querys;
+using popfragg.Common.Http;
+using popfragg.Common.Helpers.Querys;
 using System.Text;
 
-namespace fromshot_api.Repositories.Auth
+namespace popfragg.Repositories.Auth
 {
     public class AuthRepository(EnvironmentConfig config) : BaseRepository(config),IAuthRepository 
     {

@@ -1,5 +1,5 @@
-﻿using fromshot_api.Common.Configurations;
-using fromshot_api.Domain.Interfaces.Common.DataBaseConnection;
+﻿using popfragg.Common.Configurations;
+using popfragg.Domain.Interfaces.Common.DataBaseConnection;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Common.Repository.DataBaseConnection
+namespace popfragg.Common.Repository.DataBaseConnection
 {
     public class WriteDbConnection : IWriteDbConnection
     {

@@ -1,12 +1,12 @@
-﻿using fromshot_api.Common.Exceptions;
-using fromshot_api.Common.Helpers;
-using fromshot_api.Common.Helpers.Querys;
-using fromshot_api.Common.Http;
-using fromshot_api.Domain.DTOS.Authorizer;
-using fromshot_api.Domain.DTOS.Authorizer.Requests;
-using fromshot_api.Domain.DTOS.Authorizer.Responses;
-using fromshot_api.Domain.Interfaces.ExternalApiService;
-using fromshot_api.Domain.Interfaces.Http;
+﻿using popfragg.Common.Exceptions;
+using popfragg.Common.Helpers;
+using popfragg.Common.Helpers.Querys;
+using popfragg.Common.Http;
+using popfragg.Domain.DTOS.Authorizer;
+using popfragg.Domain.DTOS.Authorizer.Requests;
+using popfragg.Domain.DTOS.Authorizer.Responses;
+using popfragg.Domain.Interfaces.ExternalApiService;
+using popfragg.Domain.Interfaces.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Services.ExternalApiService.Authorizer
+namespace popfragg.Services.ExternalApiService.Authorizer
 {
     public class AuthoraizerAuthService(IAuthorizerHttpClient authorizerClient) : IAuthorizerGraphQLService
     {

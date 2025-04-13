@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Domain.DTOS.Authorizer
+namespace popfragg.Domain.DTOS.Authorizer
 {
     public class GraphQLError
     {

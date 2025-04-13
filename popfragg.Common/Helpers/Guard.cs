@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using fromshot_api.Common.Exceptions;
+using popfragg.Common.Exceptions;
 
-namespace fromshot_api.Common.Helpers;
+namespace popfragg.Common.Helpers;
 
 public static partial class Guard
 {

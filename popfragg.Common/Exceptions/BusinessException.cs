@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Common.Exceptions
+namespace popfragg.Common.Exceptions
 {
     public class BusinessException(string message, string code = "business_error")
     : Exception(message), IHasErrorCode

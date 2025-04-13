@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
 
-namespace fromshot_api.Domain.Entities
+namespace popfragg.Domain.Entities
 {
     [Table("authorizer_users")]
     public class User 

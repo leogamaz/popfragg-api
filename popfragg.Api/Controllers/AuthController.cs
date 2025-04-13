@@ -1,15 +1,15 @@
 using System.Diagnostics;
-using fromshot_api.Models;
+using popfragg.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using fromshot_api.Domain.Interfaces.Service;
-using fromshot_api.Helper;
-using fromshot_api.Domain.DTOS.Steam;
-using fromshot_api.Common.Configurations;
-using fromshot_api.Domain.DTOS.Authorizer.Requests;
-using fromshot_api.Domain.DTOS.Authorizer.Responses;
+using popfragg.Domain.Interfaces.Service;
+using popfragg.Helper;
+using popfragg.Domain.DTOS.Steam;
+using popfragg.Common.Configurations;
+using popfragg.Domain.DTOS.Authorizer.Requests;
+using popfragg.Domain.DTOS.Authorizer.Responses;
 
-namespace fromshot_api.Controllers
+namespace popfragg.Controllers
 {
     //    [Authorize] // Exige autenticação para todas as ações deste controller
     [Route("[controller]")] // Define a rota base com o nome do controller (Home)
@@ -51,6 +51,7 @@ namespace fromshot_api.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             SignUpResponse user =  await _authService.SignUp(newUser);
+
             Response.Cookies.Append("access_token",user.Access_Token, HttpRequests.SetCookieOptions(15));
 
             return Ok(user.User);

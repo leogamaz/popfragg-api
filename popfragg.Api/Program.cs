@@ -1,10 +1,10 @@
-using fromshot_api.Common.Configurations;
+using popfragg.Common.Configurations;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using fromshot_api.Middlewares;
-using fromshot_api.Middlewares.Staging;
-using fromshot_api.Common.Http;
-using fromshot_api.Configurations.Serilog;
+using popfragg.Middlewares;
+using popfragg.Middlewares.Staging;
+using popfragg.Common.Http;
+using popfragg.Configurations.Serilog;
 
 
 

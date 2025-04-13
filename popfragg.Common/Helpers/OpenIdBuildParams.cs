@@ -1,5 +1,5 @@
-﻿using fromshot_api.Domain.DTOS.Steam;
-using fromshot_api.Domain.Interfaces.Common.Helpers;
+﻿using popfragg.Domain.DTOS.Steam;
+using popfragg.Domain.Interfaces.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Common.Helpers
+namespace popfragg.Common.Helpers
 {
     public class OpenIdBuildParams : IOpenIdBuildParams
     {

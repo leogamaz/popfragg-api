@@ -1,4 +1,4 @@
-﻿namespace fromshot_api.Domain.DTOS.Steam
+﻿namespace popfragg.Domain.DTOS.Steam
 {
     public class OpenIdAuth
     {

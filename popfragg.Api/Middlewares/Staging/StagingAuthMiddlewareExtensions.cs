@@ -1,4 +1,4 @@
-﻿namespace fromshot_api.Middlewares.Staging
+﻿namespace popfragg.Middlewares.Staging
 {
     public static class StagingAuthMiddlewareExtensions
     {

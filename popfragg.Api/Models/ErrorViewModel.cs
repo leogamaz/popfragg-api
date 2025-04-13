@@ -1,4 +1,4 @@
-namespace fromshot_api.Models
+namespace popfragg.Models
 {
     public class ErrorViewModel
     {

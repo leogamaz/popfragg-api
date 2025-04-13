@@ -1,11 +1,11 @@
-﻿using fromshot_api.Common.Configurations;
+﻿using popfragg.Common.Configurations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Common.Repository
+namespace popfragg.Common.Repository
 {
     public class BaseRepository
     {
