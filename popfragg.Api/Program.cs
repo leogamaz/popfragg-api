@@ -91,7 +91,7 @@ if (app.Environment.IsDevelopment())
 //app.UseHttpsRedirection();
 
 // Adiciona CORS
-app.UseCors("AllowAll");
+app.UseCors("AllowSpecificOrigin");
 
 // Middleware de tratamento de erros
 //app.UseExceptionHandler("/error");
