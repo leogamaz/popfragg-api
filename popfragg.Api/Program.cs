@@ -58,7 +58,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.WithOrigins("http://localhost:4200") // Substitua pela sua origem real
+            builder.WithOrigins("http://localhost:4200","https://popfragg.vercel.app") // Substitua pela sua origem real
                    .AllowAnyHeader()
                    .AllowAnyMethod()
                     .AllowCredentials(); // Permite o envio de cookies
@@ -91,7 +91,7 @@ if (app.Environment.IsDevelopment())
 //app.UseHttpsRedirection();
 
 // Adiciona CORS
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowAll");
 
 // Middleware de tratamento de erros
 //app.UseExceptionHandler("/error");
