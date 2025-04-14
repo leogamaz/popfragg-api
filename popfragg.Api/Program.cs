@@ -28,37 +28,20 @@ builder.Services.ConfigureSwagger();
 builder.Services.ConfigureCors();
 
 // Força Kestrel a escutar na porta 80 (padrão do container)
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.ListenAnyIP(80); // 
+//builder.WebHost.ConfigureKestrel(serverOptions =>
+//{
+//    serverOptions.ListenAnyIP(80); // 
 
-});
-
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.ForwardedHeaders =
-        Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor |
-        Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto;
-
-});
-
+//});
 
 var app = builder.Build();
 
-app.Use(async (context, next) =>
-{
-    var proto = context.Request.Headers["X-Forwarded-Proto"].FirstOrDefault();
-    Console.WriteLine($"PROTO >>> {proto}");
-    await next();
-});
 
-// Adiciona HTTPS
-//if( app.Environment.IsStaging() 
-//    || app.Environment.IsProduction())
-//{
-app.UseForwardedHeaders();
+//Adiciona HTTPS
+if( app.Environment.IsStaging() || app.Environment.IsProduction())
+{
     app.UseHttpsRedirection();
-//}
+}
 
 // Configuração do pipeline de requisições
 if (app.Environment.IsDevelopment())
