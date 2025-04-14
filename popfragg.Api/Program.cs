@@ -16,12 +16,12 @@ SerilogConfiguration.ConfigureSerilog(builder.Configuration);
 builder.Host.UseSerilog();
 
 
+var connectionStrings = new EnvironmentConfig(builder.Configuration, builder.Environment.EnvironmentName);
 
 builder.Services.ConfigureServices();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureHttpClients();
-var connectionStrings = new EnvironmentConfig(builder.Configuration, builder.Environment.EnvironmentName);
 builder.Services.AddAuthorizerService(connectionStrings);
 builder.Services.ConfigureMiddleware();
 builder.Services.ConfigureSwagger();
@@ -31,6 +31,17 @@ builder.Services.ConfigureCors();
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.ListenAnyIP(80); // 
+});
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor |
+        Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto;
+
+    // Restringir só ao Railway:
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
 });
 
 
@@ -44,10 +55,10 @@ if (app.Environment.IsDevelopment())
 }
 
 // Adiciona HTTPS
-if(app.Environment.IsDevelopment() 
-    || app.Environment.IsStaging() 
+if( app.Environment.IsStaging() 
     || app.Environment.IsProduction())
 {
+    app.UseForwardedHeaders();
     app.UseHttpsRedirection();
 }
 
