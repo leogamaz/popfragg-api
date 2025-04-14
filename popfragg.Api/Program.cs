@@ -45,19 +45,25 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    var proto = context.Request.Headers["X-Forwarded-Proto"].FirstOrDefault();
+    Console.WriteLine($"PROTO >>> {proto}");
+    await next();
+});
+
+// Adiciona HTTPS
+//if( app.Environment.IsStaging() 
+//    || app.Environment.IsProduction())
+//{
+app.UseForwardedHeaders();
+    app.UseHttpsRedirection();
+//}
+
 // Configuração do pipeline de requisições
 if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerWithUI();
-    
-}
-
-// Adiciona HTTPS
-if( app.Environment.IsStaging() 
-    || app.Environment.IsProduction())
-{
-    app.UseForwardedHeaders();
-    app.UseHttpsRedirection();
 }
 
 // Adiciona CORS
