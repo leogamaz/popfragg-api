@@ -44,7 +44,9 @@ if (app.Environment.IsDevelopment())
 }
 
 // Adiciona HTTPS
-if(app.Environment.IsDevelopment() || app.Environment.IsStaging())
+if(app.Environment.IsDevelopment() 
+    || app.Environment.IsStaging() 
+    || app.Environment.IsProduction())
 {
     app.UseHttpsRedirection();
 }
