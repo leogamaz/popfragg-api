@@ -61,6 +61,40 @@ public static partial class Guard
             throw exceptionFactory(value);
     }
 
-    [GeneratedRegex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase, "pt-BR")]
-    private static partial Regex EmailRegex();
+    public static void AgainstInvalidPassword(string? email, string message = "Padrão de senha incorreto", string? code = null)
+    {
+        if (string.IsNullOrWhiteSpace(email) || !PasswordRegex().IsMatch(email))
+        {
+            throw new ValidationException(message, code ?? ErrorCodes.ValidationError);
+        }
+    }
+    public static void AgainstInvalidNickname(string? email, string message = "O Nickname contém caracteres não permitidos", string? code = null)
+    {
+        if (string.IsNullOrWhiteSpace(email) || !NicknameRegex().IsMatch(email))
+        {
+            throw new ValidationException(message, code ?? ErrorCodes.ValidationError);
+        }
+    }
+    public static void AgainstInvalidName(string? email, string message = "O nome ou sobrenome não é permitido", string? code = null)
+    {
+        if (string.IsNullOrWhiteSpace(email) || !NameRegex().IsMatch(email))
+        {
+            throw new ValidationException(message, code ?? ErrorCodes.ValidationError);
+        }
+    }
+
+    
+
+    [GeneratedRegex("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$", RegexOptions.IgnoreCase, "pt-BR")]
+    public static partial Regex EmailRegex();
+
+    [GeneratedRegex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*#?&^_\\-])[A-Za-z\\d@$!%*#?&^_\\-]{6,}$", RegexOptions.IgnoreCase, "pt-BR")]
+    public static partial Regex PasswordRegex();
+
+    [GeneratedRegex("^[A-Za-zÀ-ÖØ-öø-ÿ0-9_-]{4,20}$", RegexOptions.IgnoreCase, "pt-BR")]
+    public static partial Regex NicknameRegex();
+
+    [GeneratedRegex("^[A-Za-zÀ-ÖØ-öø-ÿ' -]{2,}$", RegexOptions.IgnoreCase, "pt-BR")]
+    public static partial Regex NameRegex();
+
 }

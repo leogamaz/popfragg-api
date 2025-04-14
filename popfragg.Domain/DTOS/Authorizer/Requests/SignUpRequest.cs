@@ -17,8 +17,8 @@ namespace popfragg.Domain.DTOS.Authorizer.Requests
         public required string Password { get; set; } = default!;
         public required string ConfirmPassword { get; set; } = default!;
         public required string Nickname { get; set; } = default!;
-        public required string? GivenName { get; set; }
-        public required string? FamilyName { get; set; }
+        public required string GivenName { get; set; }
+        public required string FamilyName { get; set; }
         public string? Gender { get; set; }
         public string? Birthdate { get; set; }
         public string? PhoneNumber { get; set; }

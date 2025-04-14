@@ -88,7 +88,12 @@ namespace popfragg.Services.Auth
         {
 
             string? steamId = request.AppData?.SteamId;
-            string nickname = request.Nickname;
+
+            Guard.AgainstInvalidPassword(request.Password, code:ErrorCodes.BusinessError);
+            Guard.AgainstInvalidEmail(request.Email, code: ErrorCodes.BusinessError);
+            Guard.AgainstInvalidName(request.GivenName, code: ErrorCodes.BusinessError);
+            Guard.AgainstInvalidNickname(request.Nickname, code: ErrorCodes.BusinessError);
+            Guard.AgainstTrue(request.Password != request.ConfirmPassword, "A senhas não coincidem", code:ErrorCodes.BusinessError);
 
             //Se possui steam id faz validação se já esta associado a uma conta
             await Guard.IfAsync(
@@ -97,7 +102,9 @@ namespace popfragg.Services.Auth
                 id => new BusinessException($"SteamID {id} já foi usado", ErrorCodes.SteamIdAlreadyInUse)
             );
 
-            Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(nickname), "Já existe um usuário com este nick", ErrorCodes.BusinessError);
+            Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(request.Nickname), "Já existe um usuário com este NickName", ErrorCodes.BusinessError);
+            Guard.AgainstTrue(await _authRepository.EmailExisteAsync(request.Email), "Já existe um usuário com este email", ErrorCodes.BusinessError);
+
 
             request.AddCommonRole();
 
