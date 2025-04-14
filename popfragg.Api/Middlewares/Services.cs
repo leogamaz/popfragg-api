@@ -1,20 +1,20 @@
-﻿using fromshot_api.Repositories.User;
-using fromshot_api.Domain.Interfaces.Service;
-using fromshot_api.Services.Auth;
-using fromshot_api.Domain.Interfaces.Repository;
-using fromshot_api.Repositories.Auth;
-using fromshot_api.Domain.Interfaces.Common.Helpers;
-using fromshot_api.Common.Helpers;
+﻿using popfragg.Repositories.User;
+using popfragg.Domain.Interfaces.Service;
+using popfragg.Services.Auth;
+using popfragg.Domain.Interfaces.Repository;
+using popfragg.Repositories.Auth;
+using popfragg.Domain.Interfaces.Common.Helpers;
+using popfragg.Common.Helpers;
 using Npgsql;
-using fromshot_api.Common.Repository.DataBaseConnection;
-using fromshot_api.Domain.Interfaces.Common.DataBaseConnection;
-using fromshot_api.Common.Configurations;
-using fromshot_api.Common.Http;
-using fromshot_api.Domain.Interfaces.ExternalApiService;
-using fromshot_api.Services.ExternalApiService.Authorizer;
-using fromshot_api.Domain.Interfaces.Http;
+using popfragg.Common.Repository.DataBaseConnection;
+using popfragg.Domain.Interfaces.Common.DataBaseConnection;
+using popfragg.Common.Configurations;
+using popfragg.Common.Http;
+using popfragg.Domain.Interfaces.ExternalApiService;
+using popfragg.Services.ExternalApiService.Authorizer;
+using popfragg.Domain.Interfaces.Http;
 
-namespace fromshot_api.Middlewares
+namespace popfragg.Middlewares
 {
     public static class Services
     {

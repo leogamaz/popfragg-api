@@ -1,14 +1,15 @@
-﻿using fromshot_api.Common.Exceptions;
-using fromshot_api.Common.Helpers;
-using fromshot_api.Common.Helpers.Querys;
-using fromshot_api.Common.Http;
-using fromshot_api.Domain.DTOS.Authorizer.Requests;
-using fromshot_api.Domain.DTOS.Authorizer.Responses;
-using fromshot_api.Domain.DTOS.Steam;
-using fromshot_api.Domain.Interfaces.Common.Helpers;
-using fromshot_api.Domain.Interfaces.ExternalApiService;
-using fromshot_api.Domain.Interfaces.Repository;
-using fromshot_api.Domain.Interfaces.Service;
+﻿using popfragg.Common.Exceptions;
+using popfragg.Common.Helpers;
+using popfragg.Common.Helpers.Querys;
+using popfragg.Common.Http;
+using popfragg.Domain.DTOS.Authorizer.Requests;
+using popfragg.Domain.DTOS.Authorizer.Responses;
+using popfragg.Domain.DTOS.Steam;
+using popfragg.Domain.Interfaces.Common.Helpers;
+using popfragg.Domain.Interfaces.ExternalApiService;
+using popfragg.Domain.Interfaces.Repository;
+using popfragg.Domain.Interfaces.Service;
+using popfragg.Common.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Services.Auth
+namespace popfragg.Services.Auth
 {
     public class AuthService(
         IOpenIdBuildParams openIdParamsHelper,
@@ -87,7 +88,12 @@ namespace fromshot_api.Services.Auth
         {
 
             string? steamId = request.AppData?.SteamId;
-            string nickname = request.Nickname;
+
+            Guard.AgainstInvalidPassword(request.Password, code:ErrorCodes.BusinessError);
+            Guard.AgainstInvalidEmail(request.Email, code: ErrorCodes.BusinessError);
+            Guard.AgainstInvalidName(request.GivenName, code: ErrorCodes.BusinessError);
+            Guard.AgainstInvalidNickname(request.Nickname, code: ErrorCodes.BusinessError);
+            Guard.AgainstTrue(request.Password != request.ConfirmPassword, "A senhas não coincidem", code:ErrorCodes.BusinessError);
 
             //Se possui steam id faz validação se já esta associado a uma conta
             await Guard.IfAsync(
@@ -96,9 +102,13 @@ namespace fromshot_api.Services.Auth
                 id => new BusinessException($"SteamID {id} já foi usado", ErrorCodes.SteamIdAlreadyInUse)
             );
 
-            Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(nickname), "Já existe um usuário com este nick", ErrorCodes.BusinessError);
+            Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(request.Nickname), "Já existe um usuário com este NickName", ErrorCodes.BusinessError);
+            Guard.AgainstTrue(await _authRepository.EmailExisteAsync(request.Email), "Já existe um usuário com este email", ErrorCodes.BusinessError);
 
-            var response = await _authorizerGraphQL.SignUp(request);
+
+            request.AddCommonRole();
+
+            SignUpResponse response = await _authorizerGraphQL.SignUp(request);
 
             return response;
         }

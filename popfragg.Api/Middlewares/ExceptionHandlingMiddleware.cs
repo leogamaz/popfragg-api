@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using fromshot_api.Common.Exceptions;
+using popfragg.Common.Exceptions;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 using System.IO;
 
-namespace fromshot_api.Middlewares
+namespace popfragg.Middlewares
 {
     public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger, IHostEnvironment env)
     {

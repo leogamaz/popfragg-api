@@ -1,11 +1,11 @@
-﻿using fromshot_api.Domain.Entities;
+﻿using popfragg.Domain.Entities;
 using System;
 using System.Threading.Tasks;
-using fromshot_api.Domain.Interfaces.Repository;
+using popfragg.Domain.Interfaces.Repository;
 
 
 
-namespace fromshot_api.Repositories.User
+namespace popfragg.Repositories.User
 {
     public class UserRepository() : IUserRepository
     {

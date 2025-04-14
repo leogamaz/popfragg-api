@@ -1,12 +1,12 @@
-﻿using fromshot_api.Domain.Interfaces.Repository;
-using fromshot_api.Domain.Interfaces.Service;
+﻿using popfragg.Domain.Interfaces.Repository;
+using popfragg.Domain.Interfaces.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Services.User
+namespace popfragg.Services.User
 {
     //public class UserService(IUserRepository usuarioRepository)  : IUserService
     //{

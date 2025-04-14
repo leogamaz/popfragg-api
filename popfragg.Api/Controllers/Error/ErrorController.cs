@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace fromshot_api.Controllers
+namespace popfragg.Controllers
 {
     [ApiController]
     [Route("error")]

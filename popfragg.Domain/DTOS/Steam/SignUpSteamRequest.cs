@@ -1,11 +1,11 @@
-﻿using fromshot_api.Domain.DTOS.Authorizer.Requests;
+﻿using popfragg.Domain.DTOS.Authorizer.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Domain.DTOS.Steam
+namespace popfragg.Domain.DTOS.Steam
 {
     public class SignUpSteamRequest
     {

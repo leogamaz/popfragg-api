@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 
-namespace fromshot_api.Common.Configurations
+namespace popfragg.Common.Configurations
 {
     public class EnvironmentConfig
     {

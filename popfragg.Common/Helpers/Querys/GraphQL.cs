@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace fromshot_api.Common.Helpers.Querys
+namespace popfragg.Common.Helpers.Querys
 {
     public static class GraphQL
     {

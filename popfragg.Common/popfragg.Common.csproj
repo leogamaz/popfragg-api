@@ -7,9 +7,6 @@
     <AssemblyName>popfragg.Common</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\popfragg.Domain\popfragg.Domain.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.3" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -17,5 +14,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\popfragg.Domain\popfragg.Domain.csproj" />
   </ItemGroup>
 </Project>

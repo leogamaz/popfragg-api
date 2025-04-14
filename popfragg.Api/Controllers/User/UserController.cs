@@ -1,8 +1,8 @@
 ﻿//using Microsoft.AspNetCore.Mvc;
-//using fromshot_api.Services.User;
-//using fromshot_api.Domain.Models;
+//using popfragg.Services.User;
+//using popfragg.Domain.Models;
 
-//namespace fromshot_api.Controllers.User
+//namespace popfragg.Controllers.User
 //{
 //    public class UserController : ControllerBase
 //    {

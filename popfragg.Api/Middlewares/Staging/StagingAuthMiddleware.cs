@@ -1,6 +1,6 @@
-﻿using fromshot_api.Common.Configurations;
+﻿using popfragg.Common.Configurations;
 
-namespace fromshot_api.Middlewares.Staging
+namespace popfragg.Middlewares.Staging
 {
     public class StagingAuthMiddleware(RequestDelegate next,EnvironmentConfig environmentConfig)
     {

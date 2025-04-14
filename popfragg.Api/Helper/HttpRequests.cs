@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Web;
 
 
-namespace fromshot_api.Helper
+namespace popfragg.Helper
 {
     public static class HttpRequests
     {

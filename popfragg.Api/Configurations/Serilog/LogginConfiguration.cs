@@ -1,12 +1,12 @@
-﻿using fromshot_api.Common.Exceptions;
-using fromshot_api.Configurations.Serilog.Writers;
+﻿using popfragg.Common.Exceptions;
+using popfragg.Configurations.Serilog.Writers;
 using Serilog;
 using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Sinks.PostgreSQL;
 
 
-namespace fromshot_api.Configurations.Serilog
+namespace popfragg.Configurations.Serilog
 {
     public static class SerilogConfiguration
     {

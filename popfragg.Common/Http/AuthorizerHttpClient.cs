@@ -1,9 +1,9 @@
-﻿using fromshot_api.Common.Http;
-using fromshot_api.Domain.Interfaces.Http;
+﻿using popfragg.Common.Http;
+using popfragg.Domain.Interfaces.Http;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Common.Http;
+namespace popfragg.Common.Http;
 public class AuthorizerHttpClient : IAuthorizerHttpClient
 {
     private readonly SafeHttpClient _safe;

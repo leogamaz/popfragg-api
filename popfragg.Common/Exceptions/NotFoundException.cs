@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Common.Exceptions
+namespace popfragg.Common.Exceptions
 {
     public class NotFoundException(string message, string code = "not_found")
     : Exception(message), IHasErrorCode

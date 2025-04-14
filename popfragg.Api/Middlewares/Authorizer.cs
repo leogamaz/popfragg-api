@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using fromshot_api.Common.Configurations;
+using popfragg.Common.Configurations;
 
 
-namespace fromshot_api.Middlewares
+namespace popfragg.Middlewares
 {
     public static class Authorizer
     {

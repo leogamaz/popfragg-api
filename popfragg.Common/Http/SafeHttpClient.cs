@@ -1,5 +1,5 @@
-﻿using fromshot_api.Common.Exceptions;
-using fromshot_api.Domain.Interfaces.Http;
+﻿using popfragg.Common.Exceptions;
+using popfragg.Domain.Interfaces.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fromshot_api.Common.Http
+namespace popfragg.Common.Http
 {
     public class SafeHttpClient(HttpClient client) : ISafeHttpClient
     {

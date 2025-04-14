@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace popfragg.Common.Exceptions
+namespace popfragg.Domain.Entities
 {
-    public interface IHasErrorCode
+    public class AppUserData
     {
-        string Code { get; }
+        public string? SteamId { get; init; }
     }
 }
