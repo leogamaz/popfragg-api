@@ -31,6 +31,7 @@ builder.Services.ConfigureCors();
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.ListenAnyIP(80); // 
+
 });
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -39,9 +40,6 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
         Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor |
         Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto;
 
-    // Restringir só ao Railway:
-    options.KnownNetworks.Clear();
-    options.KnownProxies.Clear();
 });
 
 
