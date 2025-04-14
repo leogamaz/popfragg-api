@@ -3,26 +3,26 @@ using Microsoft.OpenApi.Models;
 using popfragg.Common.Http;
 using System.Runtime.CompilerServices;
 
-namespace popfragg.Middlewares
+namespace popfragg.Configurations
 {
-    public static class Config
+    public static class ServiceConfigurationExtensions
     {
         public static void ConfigureMiddleware(this IServiceCollection services)
         {
             //Desabilita  a resposta automatica para model state invalido
             //É necessário verificar o model state em cada controller
-            
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true; // Evita resposta automática para ModelState inválido
             });
 
-            // Adiciona CORS
 
         }
 
         public static void ConfigureCors(this IServiceCollection services)
         {
+            // Adiciona CORS
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
@@ -58,11 +58,11 @@ namespace popfragg.Middlewares
 
         public static void ConfigureHttpClients(this IServiceCollection services)
         {
-           services.AddHttpClient(HttpClientNames.Steam, client =>
-           {
+            services.AddHttpClient(HttpClientNames.Steam, client =>
+            {
                 client.BaseAddress = new Uri("https://steamcommunity.com/openid/");
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
-           });
+            });
 
             services.AddHttpClient(HttpClientNames.Authorizer, client =>
             {
@@ -71,7 +71,7 @@ namespace popfragg.Middlewares
             });
         }
 
-        public static void AddSwagger(this WebApplication app)
+        public static void UseSwaggerWithUI(this WebApplication app)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>

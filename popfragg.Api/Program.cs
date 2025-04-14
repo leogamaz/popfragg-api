@@ -5,6 +5,7 @@ using popfragg.Middlewares;
 using popfragg.Middlewares.Staging;
 using popfragg.Common.Http;
 using popfragg.Configurations.Serilog;
+using popfragg.Configurations;
 
 
 
@@ -38,7 +39,7 @@ var app = builder.Build();
 // Configuração do pipeline de requisições
 if (app.Environment.IsDevelopment())
 {
-    app.AddSwagger();
+    app.UseSwaggerWithUI();
     
 }
 
