@@ -11,7 +11,7 @@ using popfragg.Domain.DTOS.Authorizer.Responses;
 
 namespace popfragg.Controllers
 {
-    //    [Authorize] // Exige autenticação para todas as ações deste controller!
+    //    [Authorize] // Exige autenticação para todas as ações deste controller!!
     [Route("[controller]")] // Define a rota base com o nome do controller (Home)
     public class AuthController(IAuthService authService) : ControllerBase
     {
