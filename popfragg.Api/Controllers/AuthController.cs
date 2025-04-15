@@ -41,7 +41,7 @@ namespace popfragg.Controllers
             var user = await _authService.SignUpWithSteam(newUser);
             Console.WriteLine(user);
 
-            Response.Cookies.Append("steamId", "o maldito do token", HttpRequests.SetCookieOptions(15));
+            Response.Cookies.Append("steamId", "access_token", HttpRequests.SetCookieOptions(15));
             return Ok();
         }
 
