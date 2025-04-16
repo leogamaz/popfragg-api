@@ -10,6 +10,9 @@ using popfragg.Common.Http;
 using popfragg.Common.Helpers.Querys;
 using System.Text;
 using popfragg.Common.Exceptions;
+using popfragg.Domain.DTOS.Authorizer.Requests;
+using popfragg.Domain.DTOS.User;
+using System.Collections.Generic;
 
 namespace popfragg.Repositories.Auth
 {
@@ -55,25 +58,6 @@ namespace popfragg.Repositories.Auth
             }
         }
 
-        public async Task<bool> teste()
-        {
-            try
-            {
-                const string sql = @"
-                SELECT COUNT(*)
-                FROM log.logs
-                ";
-
-                await using var conn = new NpgsqlConnection(WriteDb);
-                var count = await conn.ExecuteScalarAsync<long>(sql);
-                return count > 0;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         public async Task<bool> EmailExisteAsync(string email)
         {
             try
@@ -94,5 +78,40 @@ namespace popfragg.Repositories.Auth
             }
         }
 
+        public async Task<UserConflictCheckResult> CheckNewUserAsync(SignUpRequest request)
+        {
+            try
+            {
+                var whereClauses = new List<string>();
+                var parameters = new DynamicParameters();
+
+                if (!string.IsNullOrWhiteSpace(request.AppData?.SteamId))
+                {
+                    whereClauses.Add("CASE WHEN EXISTS(SELECT 1 FROM authorizer_users WHERE LOWER(app_data::jsonb ->> 'steam_id') = LOWER(@steamId)) THEN 'SteamId' ELSE NULL END AS SteamIdConflict");
+                    parameters.Add("steamId", request.AppData.SteamId);
+                }
+                else
+                {
+                    whereClauses.Add("NULL AS SteamIdConflict");
+                }
+
+                whereClauses.Add("CASE WHEN EXISTS(SELECT 1 FROM authorizer_users WHERE LOWER(nickname) = LOWER(@nickname)) THEN 'Nickname' ELSE NULL END AS NicknameConflict");
+                parameters.Add("nickname", request.Nickname);
+
+                whereClauses.Add("CASE WHEN EXISTS(SELECT 1 FROM authorizer_users WHERE LOWER(email) = LOWER(@email)) THEN 'Email' ELSE NULL END AS EmailConflict");
+                parameters.Add("email", request.Email);
+
+                var sql = $"SELECT {string.Join(",\n", whereClauses)};";
+
+                await using var conn = new NpgsqlConnection(AuthorizerPublic);
+                var result = await conn.QuerySingleAsync<UserConflictCheckResult>(sql, parameters);
+                return result;
+
+            }
+            catch (Exception)
+            {
+                throw new InfrastructureUnavailableException("Erro na validação do novo usuário");
+            }
+        }
     }
 }

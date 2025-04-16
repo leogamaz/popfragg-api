@@ -87,24 +87,19 @@ namespace popfragg.Services.Auth
         public async Task<SignUpResponse> SignUp(SignUpRequest request)
         {
 
-            string? steamId = request.AppData?.SteamId;
-
             Guard.AgainstInvalidPassword(request.Password, code:ErrorCodes.BusinessError);
             Guard.AgainstInvalidEmail(request.Email, code: ErrorCodes.BusinessError);
             Guard.AgainstInvalidName(request.GivenName, code: ErrorCodes.BusinessError);
             Guard.AgainstInvalidNickname(request.Nickname, code: ErrorCodes.BusinessError);
             Guard.AgainstTrue(request.Password != request.ConfirmPassword, "A senhas não coincidem", code:ErrorCodes.BusinessError);
 
-            //Se possui steam id faz validação se já esta associado a uma conta
-            await Guard.IfAsync(
-                steamId,
-                _authRepository.SteamIdExisteAsync,
-                id => new BusinessException($"SteamID {id} já foi usado", ErrorCodes.SteamIdAlreadyInUse)
-            );
-
-            Guard.AgainstTrue(await _authRepository.NicknameExisteAsync(request.Nickname), "Já existe um usuário com este NickName", ErrorCodes.BusinessError);
-            Guard.AgainstTrue(await _authRepository.EmailExisteAsync(request.Email), "Já existe um usuário com este email", ErrorCodes.BusinessError);
-
+            var conflicts = await _authRepository.CheckNewUserAsync(request);
+            Guard.AgainstConflicts(conflicts, new Dictionary<string, (string, string)>
+            {
+                ["SteamIdConflict"] = ("Steam ID já está em uso", ErrorCodes.SteamIdAlreadyInUse),
+                ["NicknameConflict"] = ("Nickname já está em uso", ErrorCodes.NicknameAlreadyInUse),
+                ["EmailConflict"] = ("Email já está em uso", ErrorCodes.EmailAlreadyInUse),
+            });
 
             request.AddCommonRole();
 
