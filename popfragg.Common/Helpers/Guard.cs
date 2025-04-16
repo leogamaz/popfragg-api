@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using popfragg.Common.Exceptions;
@@ -82,8 +83,24 @@ public static partial class Guard
             throw new ValidationException(message, code ?? ErrorCodes.ValidationError);
         }
     }
+    public static void AgainstConflicts<T>(T conflictDto, Dictionary<string, (string message, string errorCode)> mapping)
+    {
+        if (conflictDto is null)
+            throw new ArgumentNullException(nameof(conflictDto));
 
-    
+        var type = typeof(T);
+        foreach (var entry in mapping)
+        {
+            var prop = type.GetProperty(entry.Key);
+            if (prop == null)
+                continue;
+
+            var value = prop.GetValue(conflictDto) as string;
+
+            if (!string.IsNullOrWhiteSpace(value))
+                throw new BusinessException(entry.Value.message, entry.Value.errorCode);
+        }
+    }
 
     [GeneratedRegex("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$", RegexOptions.IgnoreCase, "pt-BR")]
     public static partial Regex EmailRegex();

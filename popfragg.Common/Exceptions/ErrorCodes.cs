@@ -20,5 +20,6 @@ namespace popfragg.Common.Exceptions
         public const string InvalidSteamId = "invalid_steam_id";
         public const string SteamIdAlreadyInUse = "steam_id_already_in_use";
         public const string EmailAlreadyInUse = "email_already_in_use";
+        public const string NicknameAlreadyInUse = "nickname_already_in_use";
     }
 }
