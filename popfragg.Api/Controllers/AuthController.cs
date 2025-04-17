@@ -7,7 +7,8 @@ using popfragg.Helper;
 using popfragg.Domain.DTOS.Steam;
 using popfragg.Common.Configurations;
 using popfragg.Domain.DTOS.Authorizer.Requests;
-using popfragg.Domain.DTOS.Authorizer.Responses;
+using popfragg.Domain.DTOS.Authorizer.Responses.SignUp;
+using popfragg.Domain.DTOS.Authorizer.Responses.Login;
 
 namespace popfragg.Controllers
 {
@@ -52,9 +53,21 @@ namespace popfragg.Controllers
 
             SignUpResponse user =  await _authService.SignUp(newUser);
 
-            Response.Cookies.Append("access_token",user.Access_Token, HttpRequests.SetCookieOptions(15));
+            Response.Cookies.Append("access_token",user.Access_Token, HttpRequests.SetCookieOptions(30));
 
             return Ok(user.User);
+        }
+
+        [HttpPost("sign_in")]
+        public async Task<IActionResult> SignIn([FromBody] SignInRequest signIn)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            LoginResponse response = await _authService.SignIn(signIn);
+
+            Response.Cookies.Append("access_token",response.AccessToken,HttpRequests.SetCookieOptions(30));
+
+            return Ok(response);
         }
 
     }

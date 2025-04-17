@@ -1,10 +1,11 @@
-﻿using System;
+﻿using popfragg.Domain.DTOS.Authorizer.Responses.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace popfragg.Domain.DTOS.Authorizer.Responses
+namespace popfragg.Domain.DTOS.Authorizer.Responses.SignUp
 {
     public class SignUpResponse
     {
