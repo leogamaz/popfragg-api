@@ -3,7 +3,6 @@ using popfragg.Common.Helpers;
 using popfragg.Common.Helpers.Querys;
 using popfragg.Common.Http;
 using popfragg.Domain.DTOS.Authorizer.Requests;
-using popfragg.Domain.DTOS.Authorizer.Responses;
 using popfragg.Domain.DTOS.Steam;
 using popfragg.Domain.Interfaces.Common.Helpers;
 using popfragg.Domain.Interfaces.ExternalApiService;
@@ -17,6 +16,8 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using popfragg.Domain.DTOS.Authorizer.Responses.SignUp;
+using popfragg.Domain.DTOS.Authorizer.Responses.Login;
 
 namespace popfragg.Services.Auth
 {
@@ -105,6 +106,12 @@ namespace popfragg.Services.Auth
 
             SignUpResponse response = await _authorizerGraphQL.SignUp(request);
 
+            return response;
+        }
+
+        public async Task<LoginResponse> SignIn(SignInRequest request)
+        {
+            var response = await _authorizerGraphQL.SignIn(request);
             return response;
         }
     }
