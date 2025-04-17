@@ -1,5 +1,6 @@
 ﻿using popfragg.Domain.DTOS.Authorizer.Requests;
-using popfragg.Domain.DTOS.Authorizer.Responses;
+using popfragg.Domain.DTOS.Authorizer.Responses.Login;
+using popfragg.Domain.DTOS.Authorizer.Responses.SignUp;
 using popfragg.Domain.DTOS.Steam;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace popfragg.Domain.Interfaces.Service
         public Task<string> AuthSteam(OpenIdAuth steamParams);
         public Task<SignUpResponse> SignUpWithSteam(SignUpRequest variables);
         public Task<SignUpResponse> SignUp(SignUpRequest request);
+        public Task<LoginResponse> SignIn(SignInRequest request);
     }
 }

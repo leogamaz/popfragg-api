@@ -1,52 +1,14 @@
-﻿using System.Text.RegularExpressions;
+﻿using popfragg.Tools.Codegen.Generators;
 
-var solutionRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.Parent!.FullName;
 
-var inputPath = Path.Combine(solutionRoot, "fromshot-api.Common", "Exceptions", "ErrorCodes.cs");
-var outputPath = Path.Combine(solutionRoot, "fromshot-api.Tools.Codegen", "Outputs", "error-codes.ts");
+Console.WriteLine("Gerando Schemas");
+var input = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\..\popfragg.Domain\DTOS"));
+var output = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\..\popfragg.Tools.Codegen\Outputs\schemas"));
+Directory.CreateDirectory(output);
 
-Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+ZodSchemaGenerator.Generate(input, output);
+Console.WriteLine("Schemas gerados em Outputs/schemas");
 
-if (!File.Exists(inputPath))
-{
-    Console.WriteLine($"❌ ErrorCodes.cs não encontrado em: {inputPath}");
-    return;
-}
-
-var lines = File.ReadAllLines(inputPath);
-var constRegex = new Regex(@"public const string (\w+)\s*=\s*""([^""]+)"";", RegexOptions.Compiled);
-
-var entries = new List<(string Name, string Value)>();
-
-foreach (var line in lines)
-{
-    var match = constRegex.Match(line);
-    if (match.Success)
-    {
-        var name = match.Groups[1].Value;
-        var value = match.Groups[2].Value;
-        entries.Add((name, value));
-    }
-}
-
-if (entries.Count == 0)
-{
-    Console.WriteLine("Nenhum código encontrado.");
-    return;
-}
-
-// Geração do arquivo TS
-var tsLines = new List<string>
-{
-    "export const ErrorCodes = {"
-};
-
-tsLines.AddRange(entries.Select(e => $"  {e.Name}: '{e.Value}',"));
-
-tsLines.Add("} as const;");
-tsLines.Add("");
-tsLines.Add("export type ErrorCode = typeof ErrorCodes[keyof typeof ErrorCodes];");
-
-File.WriteAllLines(outputPath, tsLines);
-
-Console.WriteLine($"Arquivo gerado com sucesso: {outputPath}");
+Console.WriteLine("Gerando Códigos de erro");
+ErrorCodesGenerator.Generate();
+Console.WriteLine("Códigos de erros Gerados com sucesso!");

@@ -4,7 +4,8 @@ using popfragg.Common.Helpers.Querys;
 using popfragg.Common.Http;
 using popfragg.Domain.DTOS.Authorizer;
 using popfragg.Domain.DTOS.Authorizer.Requests;
-using popfragg.Domain.DTOS.Authorizer.Responses;
+using popfragg.Domain.DTOS.Authorizer.Responses.Login;
+using popfragg.Domain.DTOS.Authorizer.Responses.SignUp;
 using popfragg.Domain.Interfaces.ExternalApiService;
 using popfragg.Domain.Interfaces.Http;
 using System;
@@ -62,5 +63,43 @@ namespace popfragg.Services.ExternalApiService.Authorizer
             return result.Data.Signup;
         }
 
+        public async Task<LoginResponse> SignIn(SignInRequest request)
+        {
+            string query = GraphQL.GetSignInQuery();
+
+            var requestBody = new
+            {
+                query,
+                variables = request
+            };
+
+            string json = Json.SerializeSnakeCase(requestBody);
+
+            StringContent content = new(json, Encoding.UTF8, _contentType);
+            var teste = json;
+            Console.WriteLine(teste);
+            HttpResponseMessage response = await _authorizerClient.PostAsync(
+               _graphQLEndpoint,
+               content,
+               "Falha no serviço de autenticação"
+            );
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            var result = Json.DeserializeSnakeCase<GraphQLResponse<LoginData>>(responseBody);
+
+            // Trata erro do GraphQL mesmo com status 200
+            if (result.Errors != null && result.Errors.Count != 0)
+            {
+                var errorMessage = result.Errors.First().Message;
+                throw new BusinessException($"Erro no signup: {errorMessage}", ErrorCodes.EmailAlreadyInUse);
+            }
+
+            if (result.Data == null)
+                throw new NotFoundException("Erro desconhecido", ErrorCodes.NotFound);
+
+            return result.Data.Login;
+
+        }
     }
 }

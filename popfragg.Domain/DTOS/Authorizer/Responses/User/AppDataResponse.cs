@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace popfragg.Domain.DTOS.Authorizer.Responses
+namespace popfragg.Domain.DTOS.Authorizer.Responses.User
 {
     public class AppDataResponse
     {
-        public string Email { get; set; } = default!;
-        public List<string> Roles { get; set; } = [];
         public string Steam_Id { get; set; } = default!;
     }
 }
