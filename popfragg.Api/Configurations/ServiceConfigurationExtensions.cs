@@ -28,7 +28,7 @@ namespace popfragg.Configurations
                 options.AddPolicy("AllowSpecificOrigin",
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200", "https://popfragg.vercel.app") // Substitua pela sua origem real
+                        builder.WithOrigins("http://localhost:4200", "https://popfragg.vercel.app", "https://stg.popfragg.com/login") // Substitua pela sua origem real
                                .AllowAnyHeader()
                                .AllowAnyMethod()
                                 .AllowCredentials(); // Permite o envio de cookies
