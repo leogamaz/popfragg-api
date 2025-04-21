@@ -12,10 +12,14 @@ using popfragg.Helper.Mappers;
 using popfragg.Domain.Entities;
 using popfragg.Domain.Helpers;
 using DotNetEnv;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text.Encodings.Web;
+using System.Text;
+
 
 namespace popfragg.Controllers
 {
-    //    [Authorize] // Exige autenticação para todas as ações deste controller!!
+    //    [Authorize] // Exige autenticaÃ§Ã£o para todas as aÃ§Ãµes deste controller!!
     [Route("[controller]")] // Define a rota base com o nome do controller (Home)
     public class AuthController(IAuthService authService, IJwtTokenService jwtTokenService, IWebHostEnvironment env) : ControllerBase
     {
@@ -34,16 +38,19 @@ namespace popfragg.Controllers
             UserEntitie? user = await _authService.AuthSteam(steamParams);
 
             string steamId = steamParams.ClaimedId!.Replace("https://steamcommunity.com/openid/id/", "");
-            if (user == null) //Se nulo, não tem cadastro, redireciona pro register
+            var safeSteamId = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(steamId));
+
+            if (user == null) //Se nulo, nÃ£o tem cadastro, redireciona pro register
             {
                 // salva steamId no cookie para ser vinculado depois no registro
                 Response.Cookies.Append("steamId", steamId, HttpRequests.SetCookieOptions(15));
                 //Pega o template html e faz replace com as variaveis
                 var htmlPathRegister = Path.Combine(_webEnv.WebRootPath, "html", "steam-register-redirect.html");
                 var templateRegister = await System.IO.File.ReadAllTextAsync(htmlPathRegister);
-
+                
                 var contentRegister = templateRegister
-                    .Replace("{{steamId}}", steamId)
+                    .Replace("{{steamId}}", safeSteamId)
+
                     .Replace("{{origin}}", frontEndOrigin);
 
                 return Content(contentRegister, "text/html");
@@ -58,7 +65,8 @@ namespace popfragg.Controllers
             var templateAuth = await System.IO.File.ReadAllTextAsync(htmlPathAuth);
 
             var contentAuth = templateAuth
-                .Replace("{{steamId}}", steamId)
+                .Replace("{{steamId}}", safeSteamId)
+
                 .Replace("{{origin}}", frontEndOrigin);
 
             return Content(contentAuth, "text/html");
