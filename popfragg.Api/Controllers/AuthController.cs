@@ -20,6 +20,7 @@ namespace popfragg.Controllers
     {
         private readonly IAuthService _authService = authService;
         private readonly IJwtTokenService _jwtTokenService = jwtTokenService;
+        private readonly string frontEndOrigin = Environment.GetEnvironmentVariable("FRONTEND_ORIGIN") ?? "http://localhost:4200";
 
         [HttpGet("sign_in_steam")]
         public async Task<IActionResult> SigInSteam()
@@ -40,7 +41,7 @@ namespace popfragg.Controllers
                 <html>
                   <body>
                     <script>
-                      window.opener.postMessage({{steamId: '{user.AppData.SteamId}' }}, 'http://localhost:4200/register');
+                      window.opener.postMessage({{steamId: '{user.AppData.SteamId}' }}, '{frontEndOrigin}');
                       window.close();
                     </script>
                     <p>Autenticando com Steam... Você será redirecionado.</p>
