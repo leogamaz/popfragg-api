@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <RootNamespace>popfragg.Services</RootNamespace>
+    <AssemblyName>popfragg-api.Services</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\popfragg.Common\popfragg.Common.csproj" />
+    <ProjectReference Include="..\popfragg.Domain\popfragg.Domain.csproj" />
+    <ProjectReference Include="..\popfragg.Repositories\popfragg.Repositories.csproj" />
+  </ItemGroup>
+</Project>

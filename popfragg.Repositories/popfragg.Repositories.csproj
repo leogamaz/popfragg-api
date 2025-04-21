@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <RootNamespace>popfragg.Repositories</RootNamespace>
+    <AssemblyName>popfragg-api.Repositories</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.3" />
+    <PackageReference Include="Npgsql" Version="9.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\popfragg.Domain\popfragg.Domain.csproj" />
+    <ProjectReference Include="..\popfragg.Common\popfragg.Common.csproj" />
+    <ProjectReference Include="..\popfragg.Infrastructure\popfragg.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

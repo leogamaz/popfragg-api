@@ -1,0 +1,91 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88A3C369-E8EA-4470-A55E-95CFAD03A67D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Dockerfile = Dockerfile
+		nixpacks.toml = nixpacks.toml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CORE", "CORE", "{98DA9462-239E-4C55-969E-87F2303FB312}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{CAAC391B-6EF3-43CB-97F7-2AD43EF2EC86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CROSS", "CROSS", "{CE648D23-AB5B-48DF-8E21-C41C34AA5C7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UTILS", "UTILS", "{3A9037FB-F53F-4539-8606-5C18EC8C482F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TEST", "TEST", "{E1F366D9-81AA-47B0-B44D-6D49D3667A4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "popfragg.Common", "popfragg.Common\popfragg.Common.csproj", "{CEEEC571-D2E8-4026-BFF9-4AEC9E57D7A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "popfragg.Domain", "popfragg.Domain\popfragg.Domain.csproj", "{5C7E53B0-21CE-4C49-94D7-F4F2935E865C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "popfragg.Repositories", "popfragg.Repositories\popfragg.Repositories.csproj", "{A133E7A2-548F-44C1-A7BD-5CFDDABBD45E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "popfragg.Services", "popfragg.Services\popfragg.Services.csproj", "{694624BD-44D2-4098-81BF-978C4ED92BFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "popfragg.Tools.Codegen", "popfragg.Tools.Codegen\popfragg.Tools.Codegen.csproj", "{8F5BBA5D-7273-477A-8097-5309F3A2C135}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "popfragg.Api", "popfragg.Api\popfragg.Api.csproj", "{9D997A7C-1802-4F19-9F0F-5A6C4E9006D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{061DAC55-FC08-4136-B6C1-AC38604AB42D}"
+	ProjectSection(SolutionItems) = preProject
+		CODEOWNERS = CODEOWNERS
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "popfragg.Infrastructure", "popfragg.Infrastructure\popfragg.Infrastructure.csproj", "{8E5A7537-0B81-42BC-9AA4-F04745465E56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEEEC571-D2E8-4026-BFF9-4AEC9E57D7A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEEEC571-D2E8-4026-BFF9-4AEC9E57D7A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEEEC571-D2E8-4026-BFF9-4AEC9E57D7A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEEEC571-D2E8-4026-BFF9-4AEC9E57D7A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C7E53B0-21CE-4C49-94D7-F4F2935E865C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C7E53B0-21CE-4C49-94D7-F4F2935E865C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C7E53B0-21CE-4C49-94D7-F4F2935E865C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C7E53B0-21CE-4C49-94D7-F4F2935E865C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A133E7A2-548F-44C1-A7BD-5CFDDABBD45E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A133E7A2-548F-44C1-A7BD-5CFDDABBD45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A133E7A2-548F-44C1-A7BD-5CFDDABBD45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A133E7A2-548F-44C1-A7BD-5CFDDABBD45E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{694624BD-44D2-4098-81BF-978C4ED92BFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{694624BD-44D2-4098-81BF-978C4ED92BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{694624BD-44D2-4098-81BF-978C4ED92BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{694624BD-44D2-4098-81BF-978C4ED92BFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F5BBA5D-7273-477A-8097-5309F3A2C135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F5BBA5D-7273-477A-8097-5309F3A2C135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F5BBA5D-7273-477A-8097-5309F3A2C135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F5BBA5D-7273-477A-8097-5309F3A2C135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D997A7C-1802-4F19-9F0F-5A6C4E9006D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D997A7C-1802-4F19-9F0F-5A6C4E9006D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D997A7C-1802-4F19-9F0F-5A6C4E9006D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D997A7C-1802-4F19-9F0F-5A6C4E9006D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E5A7537-0B81-42BC-9AA4-F04745465E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E5A7537-0B81-42BC-9AA4-F04745465E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E5A7537-0B81-42BC-9AA4-F04745465E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E5A7537-0B81-42BC-9AA4-F04745465E56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{88A3C369-E8EA-4470-A55E-95CFAD03A67D} = {CAAC391B-6EF3-43CB-97F7-2AD43EF2EC86}
+		{CEEEC571-D2E8-4026-BFF9-4AEC9E57D7A7} = {CE648D23-AB5B-48DF-8E21-C41C34AA5C7D}
+		{5C7E53B0-21CE-4C49-94D7-F4F2935E865C} = {98DA9462-239E-4C55-969E-87F2303FB312}
+		{A133E7A2-548F-44C1-A7BD-5CFDDABBD45E} = {98DA9462-239E-4C55-969E-87F2303FB312}
+		{694624BD-44D2-4098-81BF-978C4ED92BFB} = {98DA9462-239E-4C55-969E-87F2303FB312}
+		{8F5BBA5D-7273-477A-8097-5309F3A2C135} = {3A9037FB-F53F-4539-8606-5C18EC8C482F}
+		{9D997A7C-1802-4F19-9F0F-5A6C4E9006D4} = {CAAC391B-6EF3-43CB-97F7-2AD43EF2EC86}
+		{061DAC55-FC08-4136-B6C1-AC38604AB42D} = {88A3C369-E8EA-4470-A55E-95CFAD03A67D}
+		{8E5A7537-0B81-42BC-9AA4-F04745465E56} = {98DA9462-239E-4C55-969E-87F2303FB312}
+	EndGlobalSection
+EndGlobal

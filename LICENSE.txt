@@ -1,0 +1,16 @@
+Copyright © 2025 Leonardo Gama
+
+All rights reserved.
+
+You are permitted to view the source code of this repository and submit pull requests for improvements, suggestions, or bug fixes.
+
+However, you are **not permitted** to:
+- Use this code, in whole or in part, in any personal, commercial, or educational project
+- Modify and redistribute the code outside of this repository
+- Host, sell, sublicense, or incorporate any part of this code into other software or services
+
+Any other use requires **explicit written permission** from the author.
+
+By contributing to this repository (e.g., via pull request), you agree that your contributions may be used in the project without compensation or additional attribution beyond commit history.
+
+This is a source-available project, **not open source**.

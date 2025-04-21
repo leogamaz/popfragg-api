@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>popfragg</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dotenv.net" Version="3.2.1" />
+    <PackageReference Include="DotNetEnv" Version="3.1.1" />
+    <PackageReference Include="IdentityModel.AspNetCore" Version="4.0.0" />
+    <PackageReference Include="Keycloak.AuthServices.Authentication" Version="1.2.1" />
+    <PackageReference Include="Keycloak.AuthServices.Authorization" Version="1.2.1" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
+    <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\popfragg.Common\popfragg.Common.csproj" />
+    <ProjectReference Include="..\popfragg.Domain\popfragg.Domain.csproj" />
+    <ProjectReference Include="..\popfragg.Infrastructure\popfragg.Infrastructure.csproj" />
+    <ProjectReference Include="..\popfragg.Repositories\popfragg.Repositories.csproj" />
+    <ProjectReference Include="..\popfragg.Services\popfragg.Services.csproj" />
+  </ItemGroup>
+
+</Project>
