@@ -14,7 +14,7 @@ namespace popfragg.Domain.Interfaces.Service
 {
     public interface IAuthService
     {
-        public Task<UserEntitie> AuthSteam(SteamAuthOpenIdResponse steamParams);
+        public Task<UserEntitie?> AuthSteam(SteamAuthOpenIdResponse steamParams);
         public Task<SignUpResponse> SignUpWithSteam(SignUpRequest variables);
         public Task<SignUpResponse> SignUp(SignUpRequest request);
         public Task<LoginResponse> SignIn(SignInRequest request);

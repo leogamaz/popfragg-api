@@ -28,9 +28,7 @@ namespace popfragg.Services.Auth
         ISteamRepository steamRepository,
         IAuthRepository authRepository , 
         IAuthorizerGraphQLService authorizerGraphQL,
-        IUserRepository userRepository,
-        EnvironmentConfig envConfig,
-        IJwtTokenService jwtTokenService
+        IUserRepository userRepository
         ) : IAuthService
     {
         private readonly IOpenIdBuildParams _openIdParamsHelper = openIdParamsHelper;
@@ -38,9 +36,7 @@ namespace popfragg.Services.Auth
         private readonly IAuthRepository _authRepository = authRepository;
         private readonly IAuthorizerGraphQLService _authorizerGraphQL = authorizerGraphQL;
         private readonly IUserRepository _userRepository = userRepository;
-        private readonly EnvironmentConfig _envConfig = envConfig;
-        private readonly IJwtTokenService _jwtTokenService = jwtTokenService;
-        public async Task<UserEntitie> AuthSteam(SteamAuthOpenIdResponse steamParams)
+        public async Task<UserEntitie?> AuthSteam(SteamAuthOpenIdResponse steamParams)
         {
             //verificar null dos parametros claim_id e identity
             if (!_openIdParamsHelper.CheckSignaturesOpenId(steamParams) && steamParams == null)
@@ -71,9 +67,7 @@ namespace popfragg.Services.Auth
 
             var user = await _userRepository.GetUserBySteamId(steamId);
 
-            var claims = _jwtTokenService.GenerateClaims(user);
-
-            var token = _jwtTokenService.GenerateToken(claims);
+            if (user == null) return null;
 
             return user;
         }

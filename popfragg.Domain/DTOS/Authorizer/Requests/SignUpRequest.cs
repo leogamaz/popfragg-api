@@ -23,11 +23,16 @@ namespace popfragg.Domain.DTOS.Authorizer.Requests
         public string? Birthdate { get; set; }
         public string? PhoneNumber { get; set; }
         public List<string> Roles { get; private set; } = [];
-        public AppDataRequest? AppData { get; set; } = default!;
+        public AppDataRequest? AppData { get; private set; } = default!;
 
         public void AddCommonRole()
         {
             Roles.Add(Constants.Roles.Common);
+        }
+        public void AddSteamId(string steamId)
+        {
+            AppData ??= new AppDataRequest();
+            AppData.SteamId = steamId;
         }
 
     }

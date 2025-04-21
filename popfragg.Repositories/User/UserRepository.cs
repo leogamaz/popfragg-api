@@ -14,7 +14,7 @@ namespace popfragg.Repositories.User
 {
     public class UserRepository(EnvironmentConfig config) : BaseRepository(config),  IUserRepository
     {
-        public async Task<UserEntitie> GetUserBySteamId(string steamId)
+        public async Task<UserEntitie?> GetUserBySteamId(string steamId)
         {
             try
             {
