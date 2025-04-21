@@ -5,22 +5,27 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web;
+using popfragg.Infrastructure.Configurations;
 
 
 namespace popfragg.Helper
 {
     public static class HttpRequests
     {
+        
         public static CookieOptions SetCookieOptions(int minutes)
         {
-            var cookieOptions = new CookieOptions
+            var runningOnLocalhost = !Environment.GetEnvironmentVariable("CI")?.Equals("true") ?? true;
+
+            return new CookieOptions
             {
-                HttpOnly = true, // Protege contra acesso via JavaScript
-                Secure = false, // Apenas envia em HTTPS
-                IsEssential = true, // Garante envio do cookie mesmo sem consentimento do usuário
-                Expires = DateTime.UtcNow.AddMinutes(minutes), // Expiração em minutos
+                HttpOnly = true,
+                Secure = !runningOnLocalhost,
+                SameSite = runningOnLocalhost ? SameSiteMode.Lax : SameSiteMode.None,
+                Domain = runningOnLocalhost ? null : ".popfragg.com",
+                IsEssential = true,
+                Expires = DateTime.UtcNow.AddMinutes(minutes)
             };
-            return cookieOptions;
         }
 
         public static T CreatePayloadWithQueryParams<T>(IQueryCollection queryParams) where T : new()
