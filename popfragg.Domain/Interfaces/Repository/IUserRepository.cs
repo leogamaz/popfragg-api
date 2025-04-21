@@ -8,6 +8,6 @@ namespace popfragg.Domain.Interfaces.Repository
     public interface IUserRepository
     {
 
-        public Task<UserEntitie> GetUserBySteamId(string steamId);
+        public Task<UserEntitie?> GetUserBySteamId(string steamId);
     }
 }
