@@ -1,0 +1,8 @@
+services:
+  popfragg-api:
+    image: ${DOCKER_REGISTRY-}popfraggapi
+    build:
+      context: popfragg-api
+      dockerfile: Dockerfile
+    env_file:
+      - .env

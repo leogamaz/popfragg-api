@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="popfragg.api/popfragg.Api.csproj" />
+  <Project Path="popfragg.domain/popfragg.Domain.csproj" />
+  <Project Path="popfragg.infrastructure/popfragg.Infrastructure.csproj" Id="6d55ea14-ecfa-4fe8-b565-3b7a4904874d" />
+  <Project Path="popfragg.services/popfragg.Services.csproj" />
+  <Project Path="popfragg.shared/popfragg.Shared.csproj" Id="dc624d15-c0dd-4ba1-8cfe-43fb4321d9e1" />
+  <Project Path="popfragg.Tests/popfragg.Tests.csproj" />
+</Solution>

@@ -1,0 +1,17 @@
+﻿using popfragg.Shared.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace popfragg.Infrastructure.Exceptions
+{
+    public class BusinessException(
+        string message,
+        string code = "business_error"
+    ) : AppException(message, 422), IHasErrorCode
+    {
+        public string Code { get; } = code;
+    }
+}
